@@ -1,9 +1,6 @@
 package org.theoliverlear;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.InputMismatchException;
-import java.util.Scanner;
+import java.util.*;
 
 public class Board {
     int[][] board = new int[9][9];
@@ -100,6 +97,14 @@ public class Board {
             validColumn = false;
         }
         return validColumn;
+    }
+    public boolean isWinningSquare(int square) {
+        /*
+        Square 1 is from row 0 to row 2 and column 0 to column 2. The pattern
+        is
+        return false;
+         */
+        return false;
     }
     public void checkAnnouncements() {
         for (int i = 0; i < this.board.length; i++) {
