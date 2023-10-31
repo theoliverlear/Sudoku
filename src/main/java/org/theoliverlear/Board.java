@@ -69,7 +69,8 @@ public class Board {
     public boolean isWinningBoard() {
         boolean validBoard = true;
         for (int i = 0; i < this.board.length; i++) {
-            if (!this.isWinningRow(i) || !this.isWinningColumn(i)) {
+            if (!this.isWinningRow(i) || !this.isWinningColumn(i) ||
+                !this.isWinningSquare(i)) {
                 validBoard = false;
                 break;
             }
@@ -100,11 +101,100 @@ public class Board {
     }
     public boolean isWinningSquare(int square) {
         /*
-        Square 1 is from row 0 to row 2 and column 0 to column 2. The pattern
-        is
-        return false;
+        Square:
+        ---------------
+        (1) | (2) | (3)
+        ---------------
+        (4) | (4) | (5)
+        ---------------
+        (7) | (8) | (9)
+        ---------------
+        Grid:
+        ------------------------------------------------------------------------
+        ([0][0] [0][1] [0][2]) | ([0][3] [0][4] [0][5]) | ([0][6] [0][7] [0][8])
+
+        ([1][0] [1][1] [1][2]) | ([1][3] [1][4] [1][5]) | ([1][6] [1][7] [1][8])
+
+        ([2][0] [2][1] [2][2]) | ([2][3] [2][4] [2][5]) | ([2][6] [2][7] [2][8])
+        ------------------------------------------------------------------------
+        ([3][0] [3][1] [3][2]) | ([3][3] [3][4] [3][5]) | ([3][6] [3][7] [3][8])
+
+        ([4][0] [4][1] [4][2]) | ([4][3] [4][4] [4][5]) | ([4][6] [4][7] [4][8])
+
+        ([5][0] [5][1] [5][2]) | ([5][3] [5][4] [5][5]) | ([5][6] [5][7] [5][8])
+        ------------------------------------------------------------------------
+        ([6][0] [6][1] [6][2]) | ([6][3] [6][4] [6][5]) | ([6][6] [6][7] [6][8])
+
+        ([7][0] [7][1] [7][2]) | ([7][3] [7][4] [7][5]) | ([7][6] [7][7] [7][8])
+
+        ([8][0] [8][1] [8][2]) | ([8][3] [8][4] [8][5]) | ([8][6] [8][7] [8][8])
+        ------------------------------------------------------------------------
+
+        The pattern for square 1 to 3 in rows is no change. The same applies
+        as to the next two patterns of three rows.
+        Formula start row index:
+        if (square > 3 && square < 7) {
+            startRow = 3;
+        } else if (square > 6) {
+            startRow = 6;
+        } else {
+            startRow = 0;
+        }
+        Formula end row index:
+        endRow = startRow + 3;
+
+        The patter for columns from square 1 to 2 is an increase of 3. The
+        same applies to the next column increasing another 3. The pattern
+        resets and repeats every three rows.
+        Formula start column index:
+        if (square % 3 == 0) {
+            startColumn = 6;
+         } else if (square % 3 == 2) {
+            startColumn = 3;
+         } else {
+            startColumn = 0;
+         }
+        Formula end column index:
+        endColumn = startColumn + 3;
          */
-        return false;
+        HashSet<Integer> squareSet = new HashSet<>();
+        int[][] squareIndices = this.getSquareIndices(square);
+        int startRow = squareIndices[0][0];
+        int endRow = squareIndices[0][1];
+        int startColumn = squareIndices[1][0];
+        int endColumn = squareIndices[1][1];
+        for (int i = startRow; i < endRow; i++) {
+            for (int j = startColumn; j < endColumn; j++) {
+                squareSet.add(this.board[i][j]);
+            }
+        }
+        return squareSet.size() == 9;
+    }
+    public int[][] getSquareIndices(int square) {
+        int startRow = 0;
+        int endRow = 0;
+        int startColumn = 0;
+        int endColumn = 0;
+        if (square > 3 && square < 7) {
+            startRow = 3;
+        } else if (square > 6) {
+            startRow = 6;
+        } else {
+            startRow = 0;
+        }
+        endRow = startRow + 3;
+        if (square % 3 == 0) {
+            startColumn = 6;
+        } else if (square % 3 == 2) {
+            startColumn = 3;
+        } else {
+            startColumn = 0;
+        }
+        endColumn = startColumn + 3;
+        return new int[][] {
+            {startRow, endRow},
+            {startColumn, endColumn}
+        };
     }
     public void checkAnnouncements() {
         for (int i = 0; i < this.board.length; i++) {
