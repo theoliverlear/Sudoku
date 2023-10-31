@@ -1,10 +1,217 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <title>Sudoku</title>
+    <link rel="stylesheet" href="../static/style.css">
 </head>
 <body>
-
+<div class="centered-div">
+    <h1 id="title">Sudoku</h1>
+    <section id="button-section">
+        <div id="new-game-div">
+            <h2 id="new-game-button" class="button-text">New Game</h2>
+        </div>
+        <div id="check-game-div">
+            <h2 id="check-button" class="button-text">Check</h2>
+        </div>
+    </section>
+    <section id="game-section">
+        <!-------------------------Square-1---------------------------------->
+        <div class="square square-top-row">
+            <div class="num-top-row">
+                <div class="num-container"><h4>1</h4></div>
+                <div class="num-container"><h4>2</h4></div>
+                <div class="num-container"><h4>3</h4></div>
+            </div>
+            <div class="num-middle-row">
+                <div class="num-container"><h4>4</h4></div>
+                <div class="num-container"><h4>5</h4></div>
+                <div class="num-container"><h4>6</h4></div>
+            </div>
+            <div class="num-bottom-row">
+                <div class="num-container"><h4>7</h4></div>
+                <div class="num-container"><h4>8</h4></div>
+                <div class="num-container"><h4>9</h4></div>
+            </div>
+        </div>
+        <!-------------------------Square-2---------------------------------->
+        <div class="square square-top-row">
+            <div class="num-top-row">
+                <div class="num-container"><h4>1</h4></div>
+                <div class="num-container"><h4>2</h4></div>
+                <div class="num-container"><h4>3</h4></div>
+            </div>
+            <div class="num-middle-row">
+                <div class="num-container"><h4>4</h4></div>
+                <div class="num-container"><h4>5</h4></div>
+                <div class="num-container"><h4>6</h4></div>
+            </div>
+            <div class="num-bottom-row">
+                <div class="num-container"><h4>7</h4></div>
+                <div class="num-container"><h4>8</h4></div>
+                <div class="num-container"><h4>9</h4></div>
+            </div>
+        </div>
+        <!-------------------------Square-3---------------------------------->
+        <div class="square square-top-row">
+            <div class="num-top-row">
+                <div class="num-container"><h4>1</h4></div>
+                <div class="num-container"><h4>2</h4></div>
+                <div class="num-container"><h4>3</h4></div>
+            </div>
+            <div class="num-middle-row">
+                <div class="num-container"><h4>4</h4></div>
+                <div class="num-container"><h4>5</h4></div>
+                <div class="num-container"><h4>6</h4></div>
+            </div>
+            <div class="num-bottom-row">
+                <div class="num-container"><h4>7</h4></div>
+                <div class="num-container"><h4>8</h4></div>
+                <div class="num-container"><h4>9</h4></div>
+            </div>
+        </div>
+        <!-------------------------Square-4---------------------------------->
+        <div class="square square-middle-row">
+            <div class="num-top-row">
+                <div class="num-container"><h4>1</h4></div>
+                <div class="num-container"><h4>2</h4></div>
+                <div class="num-container"><h4>3</h4></div>
+            </div>
+            <div class="num-middle-row">
+                <div class="num-container"><h4>4</h4></div>
+                <div class="num-container"><h4>5</h4></div>
+                <div class="num-container"><h4>6</h4></div>
+            </div>
+            <div class="num-bottom-row">
+                <div class="num-container"><h4>7</h4></div>
+                <div class="num-container"><h4>8</h4></div>
+                <div class="num-container"><h4>9</h4></div>
+            </div>
+        </div>
+        <!-------------------------Square-5---------------------------------->
+        <div class="square square-middle-row">
+            <div class="num-top-row">
+                <div class="num-container"><h4>1</h4></div>
+                <div class="num-container"><h4>2</h4></div>
+                <div class="num-container"><h4>3</h4></div>
+            </div>
+            <div class="num-middle-row">
+                <div class="num-container"><h4>4</h4></div>
+                <div class="num-container"><h4>5</h4></div>
+                <div class="num-container"><h4>6</h4></div>
+            </div>
+            <div class="num-bottom-row">
+                <div class="num-container"><h4>7</h4></div>
+                <div class="num-container"><h4>8</h4></div>
+                <div class="num-container"><h4>9</h4></div>
+            </div>
+        </div>
+        <!-------------------------Square-6---------------------------------->
+        <div class="square square-middle-row">
+            <div class="num-top-row">
+                <div class="num-container"><h4>1</h4></div>
+                <div class="num-container"><h4>2</h4></div>
+                <div class="num-container"><h4>3</h4></div>
+            </div>
+            <div class="num-middle-row">
+                <div class="num-container"><h4>4</h4></div>
+                <div class="num-container"><h4>5</h4></div>
+                <div class="num-container"><h4>6</h4></div>
+            </div>
+            <div class="num-bottom-row">
+                <div class="num-container"><h4>7</h4></div>
+                <div class="num-container"><h4>8</h4></div>
+                <div class="num-container"><h4>9</h4></div>
+            </div>
+        </div>
+        <!-------------------------Square-7---------------------------------->
+        <div class="square square-bottom-row">
+            <div class="num-top-row">
+                <div class="num-container"><h4>1</h4></div>
+                <div class="num-container"><h4>2</h4></div>
+                <div class="num-container"><h4>3</h4></div>
+            </div>
+            <div class="num-middle-row">
+                <div class="num-container"><h4>4</h4></div>
+                <div class="num-container"><h4>5</h4></div>
+                <div class="num-container"><h4>6</h4></div>
+            </div>
+            <div class="num-bottom-row">
+                <div class="num-container"><h4>7</h4></div>
+                <div class="num-container"><h4>8</h4></div>
+                <div class="num-container"><h4>9</h4></div>
+            </div>
+        </div>
+        <!-------------------------Square-8---------------------------------->
+        <div class="square square-bottom-row">
+            <div class="num-top-row">
+                <div class="num-container"><h4>1</h4></div>
+                <div class="num-container"><h4>2</h4></div>
+                <div class="num-container"><h4>3</h4></div>
+            </div>
+            <div class="num-middle-row">
+                <div class="num-container"><h4>4</h4></div>
+                <div class="num-container"><h4>5</h4></div>
+                <div class="num-container"><h4>6</h4></div>
+            </div>
+            <div class="num-bottom-row">
+                <div class="num-container"><h4>7</h4></div>
+                <div class="num-container"><h4>8</h4></div>
+                <div class="num-container"><h4>9</h4></div>
+            </div>
+        </div>
+        <!-------------------------Square-9---------------------------------->
+        <div class="square square-bottom-row">
+            <div class="num-top-row">
+                <div class="num-container"><h4>1</h4></div>
+                <div class="num-container"><h4>2</h4></div>
+                <div class="num-container"><h4>3</h4></div>
+            </div>
+            <div class="num-middle-row">
+                <div class="num-container"><h4>4</h4></div>
+                <div class="num-container"><h4>5</h4></div>
+                <div class="num-container"><h4>6</h4></div>
+            </div>
+            <div class="num-bottom-row">
+                <div class="num-container"><h4>7</h4></div>
+                <div class="num-container"><h4>8</h4></div>
+                <div class="num-container"><h4>9</h4></div>
+            </div>
+        </div>
+    </section>
+</div>
+<section id="hover-selection">
+    <div class="num-top-row" id="num-hover-container">
+        <div class="hover-num-container" id="left-side-hover">
+            <h4 class="choice-num" id="choice-1">1</h4>
+        </div>
+        <div class="hover-num-container">
+            <h4 class="choice-num" id="choice-2">2</h4>
+        </div>
+        <div class="hover-num-container">
+            <h4 class="choice-num" id="choice-3">3</h4>
+        </div>
+        <div class="hover-num-container">
+            <h4 class="choice-num" id="choice-4">4</h4>
+        </div>
+        <div class="hover-num-container">
+            <h4 class="choice-num" id="choice-5">5</h4>
+        </div>
+        <div class="hover-num-container">
+            <h4 class="choice-num" id="choice-6">6</h4>
+        </div>
+        <div class="hover-num-container">
+            <h4 class="choice-num" id="choice-7">7</h4>
+        </div>
+        <div class="hover-num-container">
+            <h4 class="choice-num" id="choice-8">8</h4>
+        </div>
+        <div class="hover-num-container" id="right-side-hover">
+            <h4 class="choice-num" id="choice-9">9</h4>
+        </div>
+    </div>
+</section>
+<script src="../static/script.js"></script>
 </body>
 </html>
