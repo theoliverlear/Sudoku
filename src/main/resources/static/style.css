@@ -37,7 +37,7 @@ body {
 }
 #new-game-div, #check-game-div {
     flex-basis: 20vw;
-    height: 6vw;
+    margin: 0 0 2.5vw 0;
 }
 h2 {
     font-size: 2vw;
@@ -50,6 +50,20 @@ h4 {
     padding: 0;
     margin: 0;
 }
+.button .button-text {
+    transition: background-color 0.15s, box-shadow 0.5s, letter-spacing 0.65s;
+}
+
+.button:hover .button-text {
+    box-shadow: rgba(28, 18, 18, 0.71) 0 0 1.25vw;
+    cursor: pointer;
+    letter-spacing: 0.35vw;
+}
+.button:active .button-text {
+    background-color: rgba(63, 2, 2, 0.8);
+    box-shadow: rgba(28, 18, 18, 0.71) 0 0 0.25vw;
+}
+
 .square {
     width: 6vw;
     height: 6vw;
