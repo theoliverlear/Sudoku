@@ -5,12 +5,14 @@ boardNumBoxesArray.forEach(boardNum => {
    boardNum.addEventListener("click", selectBoardNumber);
 });
 let spotChoice;
+//---------------------------Track-Mouse-Movements----------------------------
 let mouseCords = {x: 0, y: 0};
 document.addEventListener("mousemove", monitorMouseCords);
-function monitorMouseCords (e) {
-    mouseCords.x = (e.clientX / window.innerWidth) * 100;
-    mouseCords.y = (e.clientY / window.innerHeight) * 100;
+function monitorMouseCords (mouseEvent) {
+    mouseCords.x = (mouseEvent.clientX / window.innerWidth) * 100;
+    mouseCords.y = (mouseEvent.clientY / window.innerHeight) * 100;
 }
+//----------------------------Select-Board-Number-----------------------------
 function selectBoardNumber() {
     let selectedColor = "rgba(255, 0, 0, 0.5)";
     let defaultColor = "rgba(255, 255, 255, 0.9)";
@@ -39,7 +41,7 @@ choiceNumBoxesArray.forEach(choiceNum => {
 });
 
 let spotNumberChoice;
-
+//-------------------------Select-Choice-Menu-Number--------------------------
 function selectChoiceNumber() {
     spotNumberChoice = this.innerText;
     for (let i = 0; i < boardNumBoxesArray.length; i++) {
@@ -52,4 +54,12 @@ function selectChoiceNumber() {
     hoverSelection.style.visibility = "hidden";
     spotChoice = null;
     spotNumberChoice = null;
+}
+//--------------------------------Clear-Board---------------------------------
+let clearBoardButton = document.getElementById("new-game-div");
+clearBoardButton.addEventListener("click", clearBoard);
+function clearBoard() {
+    boardNumBoxesArray.forEach(boardNum => {
+        boardNum.children[0].innerText = "";
+    });
 }
