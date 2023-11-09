@@ -15,12 +15,14 @@ public class SudokuGenerator {
     have numbers 1-9, all columns will have 1-9, and each square will have
     1-9. How can I efficiently generate a board that meets these criteria?
      */
-    public void generateSudokuBoard() {
-
+    //------------------------Find-Complete-Board-----------------------------
+    public void findCompleteBoard() {
+        /*
+        1. Generate a set of numbers for the square.
+        2.
+         */
     }
-    public void generateStartingBoard() {
-
-    }
+    //------------------------Generate-Single-Set-----------------------------
     public int[] generateSingleSet() {
         Random random = new Random();
         ArrayList<Integer> numberSet = new ArrayList<Integer>();
@@ -38,6 +40,7 @@ public class SudokuGenerator {
         }
         return numberArray;
     }
+    //----------------------Generate-Full-Number-Set--------------------------
     public void generateRandomNumberSet() {
         int[][] numberSet = new int[9][9];
         int i = 0;
@@ -48,6 +51,12 @@ public class SudokuGenerator {
             i++;
         }
         this.board.setBoard(numberSet);
+    }
+    public void generateSudokuBoard() {
+
+    }
+    public void generateStartingBoard() {
+
     }
     public static void main(String[] args) {
         SudokuGenerator sudokuGenerator = new SudokuGenerator();
