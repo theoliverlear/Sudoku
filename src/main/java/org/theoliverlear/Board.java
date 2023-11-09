@@ -61,7 +61,6 @@ public class Board {
                 validInput = true;
             } catch (InputMismatchException ex) {
                 System.out.println("Invalid input. Please try again.");
-                getIntUserInput();
             }
         } while (!validInput);
         return choice;
