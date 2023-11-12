@@ -5,16 +5,24 @@ import java.util.Scanner;
 
 public class Sudoku {
     Board board;
+    boolean inProgress;
     //===========================-Constructors-===============================
     public Sudoku() {
         this.board = new Board();
+        this.inProgress = true;
     }
     //==============================-Methods-=================================
 
     //-----------------------------Play-Game----------------------------------
     public void playGame() {
-        this.board.printBoard();
-        this.makeMove();
+        while (this.inProgress) {
+            this.board.printBoard();
+            this.makeMove();
+            if (this.board.isWinningBoard()) {
+                System.out.println("You win!");
+                this.inProgress = false;
+            }
+        }
     }
     //-----------------------------Make-Move----------------------------------
     public void makeMove() {
@@ -56,5 +64,10 @@ public class Sudoku {
         } while (!validInput);
         return choice;
     }
+    //--------------------------Determine-Result------------------------------
 
+    //=============================-Getters-==================================
+    public Board getBoard() {
+        return this.board;
+    }
 }
