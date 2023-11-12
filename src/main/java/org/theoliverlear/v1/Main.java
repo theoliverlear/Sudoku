@@ -1,4 +1,4 @@
-package org.theoliverlear;
+package org.theoliverlear.v1;
 
 import java.util.Arrays;
 import java.util.Scanner;

@@ -1,9 +1,7 @@
-package org.theoliverlear;
+package org.theoliverlear.v1;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Random;
-import java.util.TreeSet;
 
 public class SudokuGenerator {
     Board board;

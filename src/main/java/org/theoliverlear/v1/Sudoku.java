@@ -1,4 +1,4 @@
-package org.theoliverlear;
+package org.theoliverlear.v1;
 
 public class Sudoku {
     Board board;

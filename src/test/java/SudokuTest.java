@@ -1,7 +1,6 @@
 import org.junit.Test;
-import org.theoliverlear.Sudoku;
+import org.theoliverlear.v1.Sudoku;
 
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
