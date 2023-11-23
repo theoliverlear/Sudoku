@@ -14,6 +14,11 @@ public class Board {
         this.colLength = this.board[0].length;
         this.resetBoard();
     }
+    public Board(int[][] board) {
+        this.board = board;
+        this.rowLength = this.board.length;
+        this.colLength = this.board[0].length;
+    }
     //==============================-Methods-=================================
 
     //-----------------------------Reset-Board--------------------------------
@@ -198,9 +203,64 @@ public class Board {
         }
         return true;
     }
-    //=============================-Overrides-=================================
-    public boolean equals(Board board) {
-        return Arrays.deepEquals(this.board, board.getBoard());
+    //=============================-Overrides-================================
+    @Override
+    public boolean equals(Object obj) {
+        // If the object is null or not an instance of Board, then it is not
+        // equal to this board.
+        if (obj == null || !(obj instanceof Board)) {
+            return false;
+        }
+        // If it is not null and it is a Board, cast the object to a Board for
+        // comparison.
+        Board board = (Board) obj;
+        // Go through each row and column and check if the values are equal.
+        for (int rowIndex = 0; rowIndex < this.rowLength; rowIndex++) {
+            for (int colIndex = 0; colIndex < this.colLength; colIndex++) {
+                if (this.board[rowIndex][colIndex] !=
+                        board.getNumber(rowIndex + 1, colIndex + 1)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    @Override
+    public int hashCode() {
+        return Arrays.deepHashCode(this.board);
+    }
+    @Override
+    public String toString() {
+        StringBuilder boardString = new StringBuilder();
+        String separator = "-".repeat(21);
+        // Print the board by going through each row and its columns
+        for (int rowIndex = 0; rowIndex < this.rowLength; rowIndex++) {
+            for (int colIndex = 0; colIndex < this.colLength; colIndex++) {
+                // Print the value at the current row and column with a space
+                // to separate it from the next value.
+                boardString.append(this.board[rowIndex][colIndex] + " ");
+                // If the column is divisible by three that means that there
+                // should be a separator represented by the pipe "|". If it is
+                // the last column then there should be no separator just as
+                // there is not one in the starting column.
+                if ((colIndex + 1) % 3 == 0 && colIndex != this.colLength - 1) {
+                    boardString.append("| ");
+                }
+            }
+            // After completing any row, a new line is printed to start the
+            // next row.
+
+            // Once completing a full row, check if the row is divisible by
+            // three. If it is there should be a separator represented by the
+            // "-" symbols. If it is the last row then there should be no just
+            // as there is not one in the starting row.
+            if ((rowIndex + 1) % 3 == 0 && rowIndex != this.rowLength - 1) {
+                boardString.append("\n" + separator + "\n");
+            } else {
+                boardString.append("\n");
+            }
+        }
+        return boardString.toString();
     }
     //=============================-Getters-==================================
     public int[][] getBoard() {
@@ -216,4 +276,5 @@ public class Board {
     public void setBoard(int[][] board) {
         this.board = board;
     }
+
 }
