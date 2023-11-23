@@ -6,14 +6,18 @@ public class SudokuGeneratorV2 {
     Sudoku sudoku;
     final int rowLength;
     final int colLength;
-    int boardId;
-    //HashMap<Integer, HashMap<int[][], HashSet<Integer>>> numsTriedAtBoard;
-    HashMap<int[][], HashSet<Integer>> numsTriedAtBoard;
+    HashMap<Board, HashSet<Integer>> numsTriedAtBoard;
+    //===========================-Constructors-===============================
     public SudokuGeneratorV2() {
         this.sudoku = new Sudoku();
         this.rowLength = this.sudoku.getBoard().getRowLength();
         this.colLength = this.sudoku.getBoard().getColLength();
-        this.sudoku.getBoard().placeNumber(3, 4, 5);
+        this.numsTriedAtBoard = new HashMap<>();
+    }
+    public SudokuGeneratorV2(MutedBoard mutedBoard) {
+        this.sudoku = new Sudoku(mutedBoard);
+        this.rowLength = this.sudoku.getBoard().getRowLength();
+        this.colLength = this.sudoku.getBoard().getColLength();
         this.numsTriedAtBoard = new HashMap<>();
     }
     // TODO: Pass a GeneratorGUI object to this method. This will allow us to
@@ -67,11 +71,13 @@ public class SudokuGeneratorV2 {
                 // check use in the allNumbersContainsAny method which handles
                 // failed placements.
 
-                HashSet<Integer> numsTried = this.getNumsTriedAtBoard(currentBoard);
-                if (numsTried.isEmpty()) {
-                    System.out.println("Empty");
-                } else {
-                    numsTried.forEach(System.out::println);
+                HashSet<Integer> numsTried = this.getNumsTriedAtBoard(new Board(currentBoard));
+                if (numsTried != null) {
+                    if (numsTried.isEmpty()) {
+                        System.out.println("Empty");
+                    } else {
+                        numsTried.forEach(System.out::println);
+                    }
                 }
                 System.out.println("Boards: " + this.numsTriedAtBoard.size());
                 // If the board state is not in the HashMap, then we can
@@ -149,14 +155,8 @@ public class SudokuGeneratorV2 {
                     // add it to the list of failed numbers.
 
                     currentFailingNum = this.sudoku.getBoard().getNumber(rowIndex + 1, colIndex + 1);
-                    System.out.println("Pre");
-                    Arrays.stream(currentBoard).forEach(row -> System.out.println(Arrays.toString(row)));
-                    System.out.println("Post");
-                    Arrays.stream(this.sudoku.getBoard().getBoard()).forEach(row -> System.out.println(Arrays.toString(row)));
-                    System.out.println("The current board is the same as the board at the key: " + this.isSameBoard(currentBoard, this.sudoku.getBoard().getBoard()));
-                    //System.exit(0);
-                    currentBoard = this.sudoku.getBoard().getBoard();
-                    this.addNumToNumsTriedAtBoard(currentBoard, currentFailingNum);
+//                    currentBoard = this.sudoku.getBoard().getBoard();
+//                    this.addNumToNumsTriedAtBoard(new Board(currentBoard), currentFailingNum);
 
                     // We set number to the number that we need to increment
                     // to. This is so that we can try to reevaluate the
@@ -169,6 +169,9 @@ public class SudokuGeneratorV2 {
                     // placement to 0. This is so that we can try and
                     // reevaluate the number's value again.
                     this.sudoku.getBoard().placeNumber(rowIndex + 1, colIndex + 1, 0);
+
+                    currentBoard = this.sudoku.getBoard().getBoard();
+                    this.addNumToNumsTriedAtBoard(new Board(currentBoard), currentFailingNum);
 
                     // We print the board to see the progress.
                     this.sudoku.getBoard().printBoard();
@@ -226,8 +229,6 @@ public class SudokuGeneratorV2 {
                             number = this.getNextNumber(number);
                         }
                     }
-//                    currentBoard = this.sudoku.getBoard().getBoard();
-//                    this.addNumToNumsTriedAtBoard(currentBoard, number);
                 }
             }
         }
@@ -239,22 +240,22 @@ public class SudokuGeneratorV2 {
      * the method returns false.
      */
 
-    public HashSet<Integer> getNumsTriedAtBoard(int[][] board) {
+    public HashSet<Integer> getNumsTriedAtBoard(Board board) {
         // This method returns the HashSet of numbers that have been tried on
         // a given board. If the board is new, then the method returns an
         // empty HashSet.
-        for (int[][] boardInMap : this.numsTriedAtBoard.keySet()) {
+        for (Board boardInMap : this.numsTriedAtBoard.keySet()) {
             if (this.isSameBoard(boardInMap, board)) {
                 return this.numsTriedAtBoard.get(boardInMap);
             }
         }
         return new HashSet<>();
     }
-    public boolean allNumsTriedOnBoard(int[][] board) {
+    public boolean allNumsTriedOnBoard(Board board) {
         // This method checks if all numbers have been tried on a given board.
         // If all numbers have been tried, then the method returns true.
         // Otherwise, the method returns false.
-        for (int[][] boardInMap : this.numsTriedAtBoard.keySet()) {
+        for (Board boardInMap : this.numsTriedAtBoard.keySet()) {
             if (this.isSameBoard(boardInMap, board)) {
                 if (this.numsTriedAtBoard.get(boardInMap).size() == 9) {
                     return true;
@@ -263,11 +264,11 @@ public class SudokuGeneratorV2 {
         }
         return false;
     }
-    public boolean numHasBeenTriedOnBoard(int[][] board, int num) {
+    public boolean numHasBeenTriedOnBoard(Board board, int num) {
         // This method checks if a number has been tried on a given board. If
         // the number has been tried, then the method returns true. Otherwise,
         // the method returns false.
-        for (int[][] boardInMap : this.numsTriedAtBoard.keySet()) {
+        for (Board boardInMap : this.numsTriedAtBoard.keySet()) {
             if (this.isSameBoard(boardInMap, board)) {
                 if (this.numsTriedAtBoard.get(boardInMap).contains(num)) {
                     return true;
@@ -276,14 +277,19 @@ public class SudokuGeneratorV2 {
         }
         return false;
     }
-    public void addNumToNumsTriedAtBoard(int[][] board, int num) {
+    public void addNumToNumsTriedAtBoard(Board board, int num) {
         // This method adds a number to the numsTriedAtBoard HashMap. If the
         // board is new, then a new key is added to the HashMap. If the board
         // is not new, then the number is added to the HashSet at the key of
         // the board.
         boolean boardIsNew = true;
-        for (int[][] boardInMap : this.numsTriedAtBoard.keySet()) {
+        for (Board boardInMap : this.numsTriedAtBoard.keySet()) {
             if (this.isSameBoard(boardInMap, board)) {
+                if (this.numsTriedAtBoard.get(boardInMap) == null) {
+                    this.numsTriedAtBoard.put(boardInMap, new HashSet<>(List.of(num)));
+                    boardIsNew = false;
+                    break;
+                }
                 this.numsTriedAtBoard.get(boardInMap).add(num);
                 boardIsNew = false;
                 break;
@@ -293,18 +299,8 @@ public class SudokuGeneratorV2 {
             this.numsTriedAtBoard.put(board, new HashSet<>(List.of(num)));
         }
     }
-    public boolean isSameBoard(int[][] originalBoard, int[][] newBoard) {
-        // This method checks if the original board is the same as the new
-        // board. If the boards are the same, then the method returns true.
-        // Otherwise, the method returns false.
-        for (int rowIndex = 0; rowIndex < this.rowLength; rowIndex++) {
-            for (int colIndex = 0; colIndex < this.colLength; colIndex++) {
-                if (originalBoard[rowIndex][colIndex] != newBoard[rowIndex][colIndex]) {
-                    return false;
-                }
-            }
-        }
-        return true;
+    public boolean isSameBoard(Board mapBoard, Board testBoard) {
+        return mapBoard.equals(testBoard);
     }
     public int getNextNumber(int num) {
         // If the number is 9, then we need to return 1. Otherwise, we can
@@ -337,35 +333,15 @@ public class SudokuGeneratorV2 {
         }
         return true;
     }
-    public boolean allNumbersContainsAny(int rowIndex, int columnIndex, int lastBacktrackNumber) {
-        // Checking all numbers with the any method. If a number is not
-        // contained, then the allNumbersContainAny array will contain a false
-        // at the index of the number. If all numbers are contained, then the
-        // allNumbersContainAny array will contain all true values and the
-        // method will proceed to return true.
-        boolean[] allNumbersContainAny = new boolean[9];
-        for (int i = 1; i <= 9; i++) {
-            if (i == lastBacktrackNumber) {
-                allNumbersContainAny[i - 1] = true;
-            } else if (this.containsAny(rowIndex, columnIndex, i)) {
-                allNumbersContainAny[i - 1] = true;
-            } else {
-                allNumbersContainAny[i - 1] = false;
-            }
-        }
-        for (boolean numIsContained : allNumbersContainAny) {
-            if (!numIsContained) {
-                return false;
-            }
-        }
-        return true;
-    }
     public boolean allNumbersContainsAny(int rowIndex, int columnIndex, HashSet<Integer> numsTried) {
         // Checking all numbers with the any method. If a number is not
         // contained, then the allNumbersContainAny array will contain a false
         // at the index of the number. If all numbers are contained, then the
         // allNumbersContainAny array will contain all true values and the
         // method will proceed to return true.
+        if (numsTried == null) {
+            numsTried = new HashSet<>();
+        }
         boolean[] allNumbersContainAny = new boolean[9];
         for (int i = 1; i <= 9; i++) {
             if (numsTried.contains(i)) {
@@ -420,10 +396,72 @@ public class SudokuGeneratorV2 {
         }
         return false;
     }
+    public HashSet<BoardIndex> getPlaceableIndexes(Board board) {
+        HashSet<BoardIndex> placeableIndexes = new HashSet<>();
+        for (int rowIndex = 0; rowIndex < this.rowLength; rowIndex++) {
+            for (int columnIndex = 0; columnIndex < this.colLength; columnIndex++) {
+                if (board.getNumber(rowIndex + 1, columnIndex + 1) == 0) {
+                    placeableIndexes.add(new BoardIndex(rowIndex, columnIndex));
+                }
+            }
+        }
+        return placeableIndexes;
+    }
+    public void generateValidMutedBoard(int numMuted) {
+        // This method generates a valid muted board by generating a valid
+        // board and then muting a given number of indices.
+        for (int i = 0; i < numMuted;) {
+            BoardIndex randIndex = this.getRandomIndex();
+            int randNumber = this.getRandomNumber();
+            if (!this.containsAny(randIndex.getRowIndex(), randIndex.getColumnIndex(), randNumber)) {
+                this.sudoku.getBoard().placeNumber(randIndex.getRowIndex() + 1, randIndex.getColumnIndex() + 1, randNumber);
+                i++;
+            }
+        }
+    }
+    public int getRandomNumber() {
+        // This method returns a random number between 1 and 9.
+        Random random = new Random();
+        return random.nextInt(9) + 1;
+    }
+    public BoardIndex getRandomIndex() {
+        // This method returns a random index between 0 and 8.
+        int randomRow = this.getRandomNumber() - 1;
+        int randomColumn = this.getRandomNumber() - 1;
+        return new BoardIndex(randomRow, randomColumn);
+    }
+    public void seedBoard() {
+        this.sudoku.getBoard().placeNumber(1, 1, 4);
+    }
     public static void main(String[] args) {
-        SudokuGeneratorV2 sudokuGenerator = new SudokuGeneratorV2();
+        int[][] mutedBoardArray = {
+                {4, 0, 0, 0, 0, 0, 0, 0, 0},
+                {1, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {5, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0}
+        };
+        int[][] emptyArray = {
+                {0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0}
+        };
+        SudokuGeneratorV2 startingBoardGenerator = new SudokuGeneratorV2(new MutedBoard(emptyArray));
+        startingBoardGenerator.generateValidMutedBoard(4);
+        startingBoardGenerator.sudoku.getBoard().printBoard();
+        System.out.println();
+        SudokuGeneratorV2 sudokuGenerator = new SudokuGeneratorV2(new MutedBoard(startingBoardGenerator.sudoku.getBoard()));
         sudokuGenerator.generateBoard();
-        sudokuGenerator.sudoku.getBoard().printBoard();
     }
     public Sudoku getSudoku() {
         return this.sudoku;
