@@ -1,6 +1,7 @@
 package v2;
 
 import org.junit.jupiter.api.Test;
+import org.theoliverlear.v2.Board;
 import org.theoliverlear.v2.SudokuGeneratorV2;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -21,12 +22,13 @@ public class SudokuGeneratorV2Test {
                 {0, 0, 0, 0, 0, 0, 0, 0, 0},
                 {0, 0, 0, 0, 0, 0, 0, 0, 0}
         };
-        int[][] actual = this.sudokuGeneratorV2Test.getSudoku().getBoard().getBoard();
-        boolean boardMatches = this.sudokuGeneratorV2Test.isSameBoard(expected, actual);
+        Board expectedBoard = new Board(expected);
+        Board actualBoard = this.sudokuGeneratorV2Test.getSudoku().getBoard();
+        boolean boardMatches = this.sudokuGeneratorV2Test.isSameBoard(expectedBoard, actualBoard);
         assertTrue(boardMatches);
 
         this.sudokuGeneratorV2Test.getSudoku().getBoard().placeNumber(1, 1, 1);
-        boardMatches = this.sudokuGeneratorV2Test.isSameBoard(expected, actual);
+        boardMatches = this.sudokuGeneratorV2Test.isSameBoard(expectedBoard, actualBoard);
         assertFalse(boardMatches);
     }
 }
