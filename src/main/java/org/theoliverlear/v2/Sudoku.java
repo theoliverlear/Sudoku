@@ -11,6 +11,10 @@ public class Sudoku {
         this.board = new Board();
         this.inProgress = true;
     }
+    public Sudoku(MutedBoard mutedBoard) {
+        this.board = mutedBoard;
+        this.inProgress = true;
+    }
     //==============================-Methods-=================================
 
     //-----------------------------Play-Game----------------------------------
