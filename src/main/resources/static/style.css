@@ -3,7 +3,6 @@ body {
     margin: 0;
     padding: 0;
     width: 100vw;
-
     box-shadow: antiquewhite 0.25vw 0.25vw 0.25vw;
     background-image: -moz-linear-gradient( 90deg, rgb(128, 36, 36) 0%, rgb(189, 53, 53) 50%, rgb(252, 122, 122) 100%);
 }
@@ -23,7 +22,6 @@ body {
     justify-content: space-around;
     align-items: center;
     flex-wrap: wrap;
-
     margin: 0;
 }
 .button-text {
@@ -43,7 +41,6 @@ h2 {
     font-size: 2vw;
     margin: 0;
     padding: 0;
-
 }
 h4 {
     font-size: 1.75vw;
@@ -53,7 +50,6 @@ h4 {
 .button .button-text {
     transition: background-color 0.15s, box-shadow 0.5s, letter-spacing 0.65s;
 }
-
 .button:hover .button-text {
     box-shadow: rgba(28, 18, 18, 0.71) 0 0 1.25vw;
     cursor: pointer;
@@ -63,7 +59,6 @@ h4 {
     background-color: rgba(63, 2, 2, 0.8);
     box-shadow: rgba(28, 18, 18, 0.71) 0 0 0.25vw;
 }
-
 .square {
     width: 6vw;
     height: 6vw;
