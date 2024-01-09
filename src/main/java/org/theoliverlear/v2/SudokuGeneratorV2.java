@@ -1,5 +1,6 @@
 package org.theoliverlear.v2;
 
+import java.time.Instant;
 import java.util.*;
 
 public class SudokuGeneratorV2 {
@@ -46,8 +47,6 @@ public class SudokuGeneratorV2 {
 
         // First loop is for the row. Second loop is for the column.
         // Third loop is for the number.
-
-
         int number = 1;
         int currentFailingNum = -1;
         for (int rowIndex = 0; rowIndex < this.rowLength;) {
@@ -85,8 +84,6 @@ public class SudokuGeneratorV2 {
                 // state. We can then add the board state to the HashMap and
                 // add the number to the HashSet at the key of the board.
 
-
-
                 // We can now use this index to check if all numbers fail.
                 // This may include numbers that have already been attempted
                 // successfully but cause a failure at a future index. To
@@ -97,8 +94,6 @@ public class SudokuGeneratorV2 {
 
                 // If all numbers fail, we need to backtrack.
                 if (this.allNumbersContainsAny(rowIndex, colIndex, numsTried)) {
-
-
                     // If a number fails at this index, we need to reevaluate
                     // the previous indexes. This means that we need to
                     // backtrack to the previous index and try a different
@@ -107,7 +102,6 @@ public class SudokuGeneratorV2 {
                     // means that we need to try a different number at the
                     // previous index. This is why we need to keep track of
                     // the numbers tried at each board state.
-
 
                     System.out.println("Backtracking");
                     // Backtracking occurs in a failed placement.
@@ -127,11 +121,9 @@ public class SudokuGeneratorV2 {
 
                     // If we try to backtrack past the first row, we have an
                     // invalid board and we can return.
-
                     if (rowIndex == 0 && colIndex == 0) {
                         return;
                     }
-
                     // A column is decremented in every failed placement
                     // except for when it is at the first column. In that
                     // case, the column is set to 8 and the row is
@@ -143,7 +135,6 @@ public class SudokuGeneratorV2 {
                     } else {
                         colIndex--;
                     }
-
                     // We need to get the number that we need to add to the
                     // list of failed numbers. This number is the number that
                     // we are backtracking from. When we inevitably try to
@@ -153,10 +144,7 @@ public class SudokuGeneratorV2 {
 
                     // We need to get the number that we are backtracking and
                     // add it to the list of failed numbers.
-
                     currentFailingNum = this.sudoku.getBoard().getNumber(rowIndex + 1, colIndex + 1);
-//                    currentBoard = this.sudoku.getBoard().getBoard();
-//                    this.addNumToNumsTriedAtBoard(new Board(currentBoard), currentFailingNum);
 
                     // We set number to the number that we need to increment
                     // to. This is so that we can try to reevaluate the
@@ -180,7 +168,6 @@ public class SudokuGeneratorV2 {
                     // If all numbers do not fail, we can move on to the next
                     // loop to determine the number to place.
                     for (int tries = 0; tries < 9; tries++) {
-
                         // Here we can check if a number is valid knowing that at
                         // least one number is valid.
 
@@ -196,7 +183,6 @@ public class SudokuGeneratorV2 {
                             if (rowIndex == 8 && colIndex == 8) {
                                 return;
                             }
-
                             // A column increment occurs in every successful
                             // placement except for when it is at the last
                             // column. In that case, the column is reset to 0
@@ -258,12 +244,24 @@ public class SudokuGeneratorV2 {
         // First loop is for the row. Second loop is for the column.
         // Third loop is for the number.
 
-
-//        int number = 1;
+        // Logging the start time of the method. If the method takes longer
+        // than 5 seconds, then the method will recursively call itself to
+        // generate a new board.
+        final int MAX_TIME = 3;
+        long startTime = Instant.now().getEpochSecond();
         int number = new Random().nextInt(9) + 1;
         int currentFailingNum = -1;
-        for (int rowIndex = 0; rowIndex < this.rowLength;) {
+        outer: for (int rowIndex = 0; rowIndex < this.rowLength;) {
             for (int colIndex = 0; colIndex < this.colLength;) {
+                long currentTime = Instant.now().getEpochSecond();
+                long timePassed = currentTime - startTime;
+                System.out.println("Time Elapsed: " + timePassed);
+                if (timePassed > MAX_TIME) {
+                    System.out.println("Recursive call...");
+                    this.getSudoku().getBoard().resetBoard();
+                    this.generateBoardRandomly();
+                    break outer;
+                }
                 // At this point in the loop, we have an index for the number.
 
                 int[] currentIndex = {rowIndex, colIndex};
@@ -297,8 +295,6 @@ public class SudokuGeneratorV2 {
                 // state. We can then add the board state to the HashMap and
                 // add the number to the HashSet at the key of the board.
 
-
-
                 // We can now use this index to check if all numbers fail.
                 // This may include numbers that have already been attempted
                 // successfully but cause a failure at a future index. To
@@ -309,8 +305,6 @@ public class SudokuGeneratorV2 {
 
                 // If all numbers fail, we need to backtrack.
                 if (this.allNumbersContainsAny(rowIndex, colIndex, numsTried)) {
-
-
                     // If a number fails at this index, we need to reevaluate
                     // the previous indexes. This means that we need to
                     // backtrack to the previous index and try a different
@@ -319,7 +313,6 @@ public class SudokuGeneratorV2 {
                     // means that we need to try a different number at the
                     // previous index. This is why we need to keep track of
                     // the numbers tried at each board state.
-
 
                     System.out.println("Backtracking");
                     // Backtracking occurs in a failed placement.
@@ -343,7 +336,6 @@ public class SudokuGeneratorV2 {
                     if (rowIndex == 0 && colIndex == 0) {
                         return;
                     }
-
                     // A column is decremented in every failed placement
                     // except for when it is at the first column. In that
                     // case, the column is set to 8 and the row is
@@ -367,15 +359,11 @@ public class SudokuGeneratorV2 {
                     // add it to the list of failed numbers.
 
                     currentFailingNum = this.sudoku.getBoard().getNumber(rowIndex + 1, colIndex + 1);
-//                    currentBoard = this.sudoku.getBoard().getBoard();
-//                    this.addNumToNumsTriedAtBoard(new Board(currentBoard), currentFailingNum);
 
                     // We set number to the number that we need to increment
                     // to. This is so that we can try to reevaluate the
                     // number's value without beginning the failed number
                     // again.
-
-                    // number = this.getNextNumber(currentFailingNum);
 
                     if (numsTried == null) {
                         numsTried = new HashSet<>();
@@ -396,10 +384,7 @@ public class SudokuGeneratorV2 {
                 } else {
                     // If all numbers do not fail, we can move on to the next
                     // loop to determine the number to place.
-
-
                     for (int tries = 0; tries < 9; tries++) {
-
                         // Here we can check if a number is valid knowing that at
                         // least one number is valid.
 
@@ -456,14 +441,33 @@ public class SudokuGeneratorV2 {
             }
         }
     }
-
+    /*
+    1. Move to board index
+    2. Log the board as a 2d array - currentBoard
+    3. Log all numbers tried at the board - numsTried
+    ~ If all numbers have been tried at the board or the number is invalid
+    4. Set value at current index to 0
+    5. Move to previous index
+    6. Set failing number to the value just moved backwards to - currentFailingNum
+    7. Get a random number that has not been tried at the board
+    8. Set value at current index to 0 to reset the value
+    9. Update current board to the new board which was just reset
+    10. Add the failing number to the list of numbers tried at the board
+    ~ If all numbers have not been tried at the board
+    4. Enter a loop to limit attempts to 9 times (all possible numbers count)
+        ~ If the number is valid
+    5. Set value at current index to number
+    6. Move to next index
+    7. Generate a new random number which has not been tried
+        ~ If the number is invalid
+    5. Generate a new random number which has not been tried
+     */
 
     /**
      * This method checks if all numbers have been tried on a given board. If
      * all numbers have been tried, then the method returns true. Otherwise,
      * the method returns false.
      */
-
     public HashSet<Integer> getNumsTriedAtBoard(Board board) {
         // This method returns the HashSet of numbers that have been tried on
         // a given board. If the board is new, then the method returns an
@@ -592,7 +596,6 @@ public class SudokuGeneratorV2 {
         }
         return true;
     }
-
     public boolean containsAny(int rowIndex, int columnIndex, int value) {
         // If another number occurs in the row, column, or square, then the
         // number is contained.
@@ -668,53 +671,13 @@ public class SudokuGeneratorV2 {
         this.sudoku.getBoard().placeNumber(1, 1, 4);
     }
     public static void main(String[] args) {
-//        int[][] mutedBoardArray = {
-//                {4, 0, 0, 0, 0, 0, 0, 0, 0},
-//                {1, 0, 0, 0, 0, 0, 0, 0, 0},
-//                {0, 0, 0, 0, 0, 0, 0, 0, 0},
-//                {5, 0, 0, 0, 0, 0, 0, 0, 0},
-//                {0, 0, 0, 0, 0, 0, 0, 0, 0},
-//                {0, 0, 0, 0, 0, 0, 0, 0, 0},
-//                {0, 0, 0, 0, 0, 0, 0, 0, 0},
-//                {0, 0, 0, 0, 0, 0, 0, 0, 0},
-//                {0, 0, 0, 0, 0, 0, 0, 0, 0}
-//        };
-//        int[][] emptyArray = {
-//                {0, 0, 0, 0, 0, 0, 0, 0, 0},
-//                {0, 0, 0, 0, 0, 0, 0, 0, 0},
-//                {0, 0, 0, 0, 0, 0, 0, 0, 0},
-//                {0, 0, 0, 0, 0, 0, 0, 0, 0},
-//                {0, 0, 0, 0, 0, 0, 0, 0, 0},
-//                {0, 0, 0, 0, 0, 0, 0, 0, 0},
-//                {0, 0, 0, 0, 0, 0, 0, 0, 0},
-//                {0, 0, 0, 0, 0, 0, 0, 0, 0},
-//                {0, 0, 0, 0, 0, 0, 0, 0, 0}
-//        };
-//        SudokuGeneratorV2 startingBoardGenerator = new SudokuGeneratorV2(new MutedBoard(emptyArray));
-//        startingBoardGenerator.generateValidMutedBoard(4);
-//        startingBoardGenerator.sudoku.getBoard().printBoard();
-//        System.out.println();
-//        SudokuGeneratorV2 sudokuGenerator = new SudokuGeneratorV2(new MutedBoard(startingBoardGenerator.sudoku.getBoard()));
-//        sudokuGenerator.generateBoard();
-        int[][] boardArray = {
-                {4, 2, 1, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0}
-        };
-
-        SudokuGeneratorV2 sudokuGenerator = new SudokuGeneratorV2();
-        sudokuGenerator.sudoku.getBoard().setBoard(boardArray);
-        sudokuGenerator.sudoku.getBoard().printBoard();
-        sudokuGenerator.generateBoardRandomly();
-        // sudokuGenerator.generateBoard();
-        sudokuGenerator.sudoku.getBoard().printBoard();
+            SudokuGeneratorV2 sudokuGenerator = new SudokuGeneratorV2();
+            sudokuGenerator.sudoku.getBoard().printBoard();
+            sudokuGenerator.generateBoardRandomly();
+            System.out.println("=".repeat(21));
+            sudokuGenerator.sudoku.getBoard().printBoard();
     }
+    //=============================-Getters-==================================
     public Sudoku getSudoku() {
         return this.sudoku;
     }
