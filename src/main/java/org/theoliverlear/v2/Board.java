@@ -204,6 +204,8 @@ public class Board {
         return true;
     }
     //=============================-Overrides-================================
+
+    //------------------------------Equals------------------------------------
     @Override
     public boolean equals(Object obj) {
         // If the object is null or not an instance of Board, then it is not
@@ -225,10 +227,12 @@ public class Board {
         }
         return true;
     }
+    //------------------------------Hash-Code---------------------------------
     @Override
     public int hashCode() {
         return Arrays.deepHashCode(this.board);
     }
+    //------------------------------To-String---------------------------------
     @Override
     public String toString() {
         StringBuilder boardString = new StringBuilder();
