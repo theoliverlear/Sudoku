@@ -1,7 +1,7 @@
 package v2;
 
 import org.junit.Test;
-import org.theoliverlear.v2.MutedBoard;
+import org.theoliverlear.model.MutedBoard;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
