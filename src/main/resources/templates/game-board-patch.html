@@ -1,0 +1,328 @@
+<!---------------------------------Board------------------------------------->
+<section id="game-section" th:fragment="game-board-patch">
+    <!----------------------------Square-1----------------------------------->
+    <div class="square square-top-row">
+        <div class="num-top-row">
+            <div class="num-container" th:style="${one_one_style}">
+                <h4 th:text="${one_one}" id="1-1">1</h4>
+            </div>
+            <div class="num-container" th:style="${one_two_style}">
+                <h4 th:text="${one_two}" id="1-2">2</h4>
+            </div>
+            <div class="num-container" th:style="${one_three_style}">
+                <h4 th:text="${one_three}" id="1-3">3</h4>
+            </div>
+        </div>
+        <div class="num-middle-row">
+            <div class="num-container" th:style="${two_one_style}">
+                <h4 th:text="${two_one}" id="2-1">4</h4>
+            </div>
+            <div class="num-container" th:style="${two_two_style}">
+                <h4 th:text="${two_two}" id="2-2">5</h4>
+            </div>
+            <div class="num-container" th:style="${two_three_style}">
+                <h4 th:text="${two_three}" id="2-3">6</h4>
+            </div>
+        </div>
+        <div class="num-bottom-row">
+            <div class="num-container" th:style="${three_one_style}">
+                <h4 th:text="${three_one}" id="3-1">7</h4>
+            </div>
+            <div class="num-container" th:style="${three_two_style}">
+                <h4 th:text="${three_two}" id="3-2">8</h4>
+            </div>
+            <div class="num-container" th:style="${three_three_style}">
+                <h4 th:text="${three_three}" id="3-3">9</h4>
+            </div>
+        </div>
+    </div>
+    <!----------------------------Square-2----------------------------------->
+    <div class="square square-top-row">
+        <div class="num-top-row">
+            <div class="num-container" th:style="${one_four_style}">
+                <h4 th:text="${one_four}" id="1-4">1</h4>
+            </div>
+            <div class="num-container" th:style="${one_five_style}">
+                <h4 th:text="${one_five}" id="1-5">2</h4>
+            </div>
+            <div class="num-container" th:style="${one_six_style}">
+                <h4 th:text="${one_six}" id="1-6">3</h4>
+            </div>
+        </div>
+        <div class="num-middle-row">
+            <div class="num-container" th:style="${two_four_style}">
+                <h4 th:text="${two_four}" id="2-4">4</h4>
+            </div>
+            <div class="num-container" th:style="${two_five_style}">
+                <h4 th:text="${two_five}" id="2-5">5</h4>
+            </div>
+            <div class="num-container" th:style="${two_six_style}">
+                <h4 th:text="${two_six}" id="2-6">6</h4>
+            </div>
+        </div>
+        <div class="num-bottom-row">
+            <div class="num-container" th:style="${three_four_style}">
+                <h4 th:text="${three_four}" id="3-4">7</h4>
+            </div>
+            <div class="num-container" th:style="${three_five_style}">
+                <h4 th:text="${three_five}" id="3-5">8</h4>
+            </div>
+            <div class="num-container" th:style="${three_six_style}">
+                <h4 th:text="${three_six}" id="3-6">9</h4>
+            </div>
+        </div>
+    </div>
+    <!----------------------------Square-3----------------------------------->
+    <div class="square square-top-row">
+        <div class="num-top-row">
+            <div class="num-container" th:style="${one_seven_style}">
+                <h4 th:text="${one_seven}" id="1-7">1</h4>
+            </div>
+            <div class="num-container" th:style="${one_eight_style}">
+                <h4 th:text="${one_eight}" id="1-8">2</h4>
+            </div>
+            <div class="num-container" th:style="${one_nine_style}">
+                <h4 th:text="${one_nine}" id="1-9">3</h4>
+            </div>
+        </div>
+        <div class="num-middle-row">
+            <div class="num-container" th:style="${two_seven_style}">
+                <h4 th:text="${two_seven}" id="2-7">4</h4>
+            </div>
+            <div class="num-container" th:style="${two_eight_style}">
+                <h4 th:text="${two_eight}" id="2-8">5</h4>
+            </div>
+            <div class="num-container" th:style="${two_nine_style}">
+                <h4 th:text="${two_nine}" id="2-9">6</h4>
+            </div>
+        </div>
+        <div class="num-bottom-row">
+            <div class="num-container" th:style="${three_seven_style}">
+                <h4 th:text="${three_seven}" id="3-7">7</h4>
+            </div>
+            <div class="num-container" th:style="${three_eight_style}">
+                <h4 th:text="${three_eight}" id="3-8">8</h4>
+            </div>
+            <div class="num-container" th:style="${three_nine_style}">
+                <h4 th:text="${three_nine}" id="3-9">9</h4>
+            </div>
+        </div>
+    </div>
+    <!----------------------------Square-4----------------------------------->
+    <div class="square square-middle-row">
+        <div class="num-top-row">
+            <div class="num-container" th:style="${four_one_style}">
+                <h4 th:text="${four_one}" id="4-1">1</h4>
+            </div>
+            <div class="num-container" th:style="${four_two_style}">
+                <h4 th:text="${four_two}" id="4-2">2</h4>
+            </div>
+            <div class="num-container" th:style="${four_three_style}">
+                <h4 th:text="${four_three}" id="4-3">3</h4>
+            </div>
+        </div>
+        <div class="num-middle-row">
+            <div class="num-container" th:style="${five_one_style}">
+                <h4 th:text="${five_one}" id="5-1">4</h4>
+            </div>
+            <div class="num-container" th:style="${five_two_style}">
+                <h4 th:text="${five_two}" id="5-2">5</h4>
+            </div>
+            <div class="num-container" th:style="${five_three_style}">
+                <h4 th:text="${five_three}" id="5-3">6</h4>
+            </div>
+        </div>
+        <div class="num-bottom-row">
+            <div class="num-container" th:style="${six_one_style}">
+                <h4 th:text="${six_one}" id="6-1">7</h4>
+            </div>
+            <div class="num-container" th:style="${six_two_style}">
+                <h4 th:text="${six_two}" id="6-2">8</h4>
+            </div>
+            <div class="num-container" th:style="${six_three_style}">
+                <h4 th:text="${six_three}" id="6-3">9</h4>
+            </div>
+        </div>
+    </div>
+    <!---------------------------Square-5------------------------------------>
+    <div class="square square-middle-row">
+        <div class="num-top-row">
+            <div class="num-container" th:style="${four_four_style}">
+                <h4 th:text="${four_four}" id="4-4">1</h4>
+            </div>
+            <div class="num-container" th:style="${four_five_style}">
+                <h4 th:text="${four_five}" id="4-5">2</h4>
+            </div>
+            <div class="num-container" th:style="${four_six_style}">
+                <h4 th:text="${four_six}" id="4-6">3</h4>
+            </div>
+        </div>
+        <div class="num-middle-row">
+            <div class="num-container" th:style="${five_four_style}">
+                <h4 th:text="${five_four}" id="5-4">4</h4>
+            </div>
+            <div class="num-container" th:style="${five_five_style}">
+                <h4 th:text="${five_five}" id="5-5">5</h4>
+            </div>
+            <div class="num-container" th:style="${five_six_style}">
+                <h4 th:text="${five_six}" id="5-6">6</h4>
+            </div>
+        </div>
+        <div class="num-bottom-row">
+            <div class="num-container" th:style="${six_four_style}">
+                <h4 th:text="${six_four}" id="6-4">7</h4>
+            </div>
+            <div class="num-container" th:style="${six_five_style}">
+                <h4 th:text="${six_five}" id="6-5">8</h4>
+            </div>
+            <div class="num-container" th:style="${six_six_style}">
+                <h4 th:text="${six_six}" id="6-6">9</h4>
+            </div>
+        </div>
+    </div>
+    <!---------------------------Square-6------------------------------------>
+    <div class="square square-middle-row">
+        <div class="num-top-row">
+            <div class="num-container" th:style="${four_seven_style}">
+                <h4 th:text="${four_seven}" id="4-7">1</h4>
+            </div>
+            <div class="num-container" th:style="${four_eight_style}">
+                <h4 th:text="${four_eight}" id="4-8">2</h4>
+            </div>
+            <div class="num-container" th:style="${four_nine_style}">
+                <h4 th:text="${four_nine}" id="4-9">3</h4>
+            </div>
+        </div>
+        <div class="num-middle-row">
+            <div class="num-container" th:style="${five_seven_style}">
+                <h4 th:text="${five_seven}" id="5-7">4</h4>
+            </div>
+            <div class="num-container" th:style="${five_eight_style}">
+                <h4 th:text="${five_eight}" id="5-8">5</h4>
+            </div>
+            <div class="num-container" th:style="${five_nine_style}">
+                <h4 th:text="${five_nine}" id="5-9">6</h4>
+            </div>
+        </div>
+        <div class="num-bottom-row">
+            <div class="num-container" th:style="${six_seven_style}">
+                <h4 th:text="${six_seven}" id="6-7">7</h4>
+            </div>
+            <div class="num-container" th:style="${six_eight_style}">
+                <h4 th:text="${six_eight}" id="6-8">8</h4>
+            </div>
+            <div class="num-container" th:style="${six_nine_style}">
+                <h4 th:text="${six_nine}" id="6-9">9</h4>
+            </div>
+        </div>
+    </div>
+    <!---------------------------Square-7------------------------------------>
+    <div class="square square-bottom-row">
+        <div class="num-top-row">
+            <div class="num-container" th:style="${seven_one_style}">
+                <h4 th:text="${seven_one}" id="7-1">1</h4>
+            </div>
+            <div class="num-container" th:style="${seven_two_style}">
+                <h4 th:text="${seven_two}" id="7-2">2</h4>
+            </div>
+            <div class="num-container" th:style="${seven_three_style}">
+                <h4 th:text="${seven_three}" id="7-3">3</h4>
+            </div>
+        </div>
+        <div class="num-middle-row">
+            <div class="num-container" th:style="${eight_one_style}">
+                <h4 th:text="${eight_one}" id="8-1">4</h4>
+            </div>
+            <div class="num-container" th:style="${eight_two_style}">
+                <h4 th:text="${eight_two}" id="8-2">5</h4>
+            </div>
+            <div class="num-container" th:style="${eight_three_style}">
+                <h4 th:text="${eight_three}" id="8-3">6</h4>
+            </div>
+        </div>
+        <div class="num-bottom-row">
+            <div class="num-container" th:style="${nine_one_style}">
+                <h4 th:text="${nine_one}" id="9-1">7</h4>
+            </div>
+            <div class="num-container" th:style="${nine_two_style}">
+                <h4 th:text="${nine_two}" id="9-2">8</h4>
+            </div>
+            <div class="num-container" th:style="${nine_three_style}">
+                <h4 th:text="${nine_three}" id="9-3">9</h4>
+            </div>
+        </div>
+    </div>
+    <!---------------------------Square-8------------------------------------>
+    <div class="square square-bottom-row">
+        <div class="num-top-row">
+            <div class="num-container" th:style="${seven_four_style}">
+                <h4 th:text="${seven_four}" id="7-4">1</h4>
+            </div>
+            <div class="num-container" th:style="${seven_five_style}">
+                <h4 th:text="${seven_five}" id="7-5">2</h4>
+            </div>
+            <div class="num-container" th:style="${seven_six_style}">
+                <h4 th:text="${seven_six}" id="7-6">3</h4>
+            </div>
+        </div>
+        <div class="num-middle-row">
+            <div class="num-container" th:style="${eight_four_style}">
+                <h4 th:text="${eight_four}" id="8-4">4</h4>
+            </div>
+            <div class="num-container" th:style="${eight_five_style}">
+                <h4 th:text="${eight_five}" id="8-5">5</h4>
+            </div>
+            <div class="num-container" th:style="${eight_six_style}">
+                <h4 th:text="${eight_six}" id="8-6">6</h4>
+            </div>
+        </div>
+        <div class="num-bottom-row">
+            <div class="num-container" th:style="${nine_four_style}">
+                <h4 th:text="${nine_four}" id="9-4">7</h4>
+            </div>
+            <div class="num-container" th:style="${nine_five_style}">
+                <h4 th:text="${nine_five}" id="9-5">8</h4>
+            </div>
+            <div class="num-container" th:style="${nine_six_style}">
+                <h4 th:text="${nine_six}" id="9-6">9</h4>
+            </div>
+        </div>
+    </div>
+    <!---------------------------Square-9------------------------------------>
+    <div class="square square-bottom-row">
+        <div class="num-top-row">
+            <div class="num-container" th:style="${seven_seven_style}">
+                <h4 th:text="${seven_seven}" id="7-7">1</h4>
+            </div>
+            <div class="num-container" th:style="${seven_eight_style}">
+                <h4 th:text="${seven_eight}" id="7-8">2</h4>
+            </div>
+            <div class="num-container" th:style="${seven_nine_style}">
+                <h4 th:text="${seven_nine}" id="7-9">3</h4>
+            </div>
+        </div>
+        <div class="num-middle-row">
+            <div class="num-container" th:style="${eight_seven_style}">
+                <h4 th:text="${eight_seven}" id="8-7">4</h4>
+            </div>
+            <div class="num-container" th:style="${eight_eight_style}">
+                <h4 th:text="${eight_eight}" id="8-8">5</h4>
+            </div>
+            <div class="num-container" th:style="${eight_nine_style}">
+                <h4 th:text="${eight_nine}" id="8-9">6</h4>
+            </div>
+        </div>
+        <div class="num-bottom-row">
+            <div class="num-container" th:style="${nine_seven_style}">
+                <h4 th:text="${nine_seven}" id="9-7">7</h4>
+            </div>
+            <div class="num-container" th:style="${nine_eight_style}">
+                <h4 th:text="${nine_eight}" id="9-8">8</h4>
+            </div>
+            <div class="num-container" th:style="${nine_nine_style}">
+                <h4 th:text="${nine_nine}" id="9-9">9</h4>
+            </div>
+        </div>
+    </div>
+</section>
+</div>
