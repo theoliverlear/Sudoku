@@ -1,17 +1,17 @@
 package v2;
 
 import org.junit.jupiter.api.Test;
-import org.theoliverlear.v2.Board;
-import org.theoliverlear.v2.MutedBoard;
-import org.theoliverlear.v2.SudokuGeneratorV2;
+import org.theoliverlear.model.Board;
+import org.theoliverlear.model.MutedBoard;
+import org.theoliverlear.model.SudokuGenerator;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class SudokuGeneratorV2Test {
-    SudokuGeneratorV2 sudokuGeneratorV2Test = new SudokuGeneratorV2();
+public class SudokuGeneratorTest {
+    SudokuGenerator sudokuGeneratorTest = new SudokuGenerator();
     @Test
     public void testIsSameBoard() {
-        this.sudokuGeneratorV2Test.getSudoku().getBoard().resetBoard();
+        this.sudokuGeneratorTest.getSudoku().getBoard().resetBoard();
         int[][] expected = {
                 {0, 0, 0, 0, 0, 0, 0, 0, 0},
                 {0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -24,12 +24,12 @@ public class SudokuGeneratorV2Test {
                 {0, 0, 0, 0, 0, 0, 0, 0, 0}
         };
         Board expectedBoard = new Board(expected);
-        Board actualBoard = this.sudokuGeneratorV2Test.getSudoku().getBoard();
-        boolean boardMatches = this.sudokuGeneratorV2Test.isSameBoard(expectedBoard, actualBoard);
+        Board actualBoard = this.sudokuGeneratorTest.getSudoku().getBoard();
+        boolean boardMatches = this.sudokuGeneratorTest.isSameBoard(expectedBoard, actualBoard);
         assertTrue(boardMatches);
 
-        this.sudokuGeneratorV2Test.getSudoku().getBoard().placeNumber(1, 1, 1);
-        boardMatches = this.sudokuGeneratorV2Test.isSameBoard(expectedBoard, actualBoard);
+        this.sudokuGeneratorTest.getSudoku().getBoard().placeNumber(1, 1, 1);
+        boardMatches = this.sudokuGeneratorTest.isSameBoard(expectedBoard, actualBoard);
         assertFalse(boardMatches);
     }
     // Test the muted board
@@ -45,13 +45,13 @@ public class SudokuGeneratorV2Test {
             {0, 0, 0, 0, 0, 0, 0, 0, 0}  // 9
     };
     MutedBoard mutedBoard = new MutedBoard(board);
-    SudokuGeneratorV2 sudokuGeneratorV2MutedBoardTest = new SudokuGeneratorV2(mutedBoard);
+    SudokuGenerator sudokuGeneratorMutedBoardTest = new SudokuGenerator(mutedBoard);
     @Test
     public void testMutedIndices() {
-        this.sudokuGeneratorV2MutedBoardTest.generateBoard();
-        this.sudokuGeneratorV2MutedBoardTest.getSudoku().getBoard().printBoard();
-        assertTrue(this.sudokuGeneratorV2MutedBoardTest.getSudoku().getBoard().getNumber(1, 1) == 2);
-        assertTrue(this.sudokuGeneratorV2MutedBoardTest.getSudoku().getBoard().getNumber(1, 2) == 6);
+        this.sudokuGeneratorMutedBoardTest.generateBoard();
+        this.sudokuGeneratorMutedBoardTest.getSudoku().getBoard().printBoard();
+        assertTrue(this.sudokuGeneratorMutedBoardTest.getSudoku().getBoard().getNumber(1, 1) == 2);
+        assertTrue(this.sudokuGeneratorMutedBoardTest.getSudoku().getBoard().getNumber(1, 2) == 6);
     }
     // Test muted board generator
     int[][] emptyMutedBoard = {
@@ -66,10 +66,10 @@ public class SudokuGeneratorV2Test {
             {0, 0, 0, 0, 0, 0, 0, 0, 0}  // 9
     };
     MutedBoard mutedBoardGeneratorBoard = new MutedBoard(emptyMutedBoard);
-    SudokuGeneratorV2 sudokuGeneratorV2MutedBoardGeneratorTest = new SudokuGeneratorV2(mutedBoardGeneratorBoard);
+    SudokuGenerator sudokuGeneratorMutedBoardGeneratorTest = new SudokuGenerator(mutedBoardGeneratorBoard);
     @Test
     public void testMutedBoardGenerator() {
-        this.sudokuGeneratorV2MutedBoardGeneratorTest.generateValidMutedBoard(81);
-        this.sudokuGeneratorV2MutedBoardGeneratorTest.getSudoku().getBoard().printBoard();
+        this.sudokuGeneratorMutedBoardGeneratorTest.generateValidMutedBoard(81);
+        this.sudokuGeneratorMutedBoardGeneratorTest.getSudoku().getBoard().printBoard();
     }
 }
