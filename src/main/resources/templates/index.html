@@ -1,9 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/html"
+      dir="ltr">
 <head>
     <meta charset="UTF-8">
     <title>Sudoku</title>
-    <link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet" href="../static/style.css"
+          th:href="@{/style.css}">
 </head>
 <body>
 <div class="centered-div">
@@ -21,169 +24,8 @@
     <!-- TODO: Numbers that are preset will be double outline sized and
                unclickable -->
     <!-------------------------------Board----------------------------------->
-    <section id="game-section">
-        <!-------------------------Square-1---------------------------------->
-        <div class="square square-top-row">
-            <div class="num-top-row">
-                <div class="num-container"><h4 id="1-1">1</h4></div>
-                <div class="num-container"><h4 id="1-2">2</h4></div>
-                <div class="num-container"><h4 id="1-3">3</h4></div>
-            </div>
-            <div class="num-middle-row">
-                <div class="num-container"><h4 id="2-1">4</h4></div>
-                <div class="num-container"><h4 id="2-2">5</h4></div>
-                <div class="num-container"><h4 id="2-3">6</h4></div>
-            </div>
-            <div class="num-bottom-row">
-                <div class="num-container"><h4 id="3-1">7</h4></div>
-                <div class="num-container"><h4 id="3-2">8</h4></div>
-                <div class="num-container"><h4 id="3-3">9</h4></div>
-            </div>
-        </div>
-        <!-------------------------Square-2---------------------------------->
-        <div class="square square-top-row">
-            <div class="num-top-row">
-                <div class="num-container"><h4 id="1-4">1</h4></div>
-                <div class="num-container"><h4 id="1-5">2</h4></div>
-                <div class="num-container"><h4 id="1-6">3</h4></div>
-            </div>
-            <div class="num-middle-row">
-                <div class="num-container"><h4 id="2-4">4</h4></div>
-                <div class="num-container"><h4 id="2-5">5</h4></div>
-                <div class="num-container"><h4 id="2-6">6</h4></div>
-            </div>
-            <div class="num-bottom-row">
-                <div class="num-container"><h4 id="3-4">7</h4></div>
-                <div class="num-container"><h4 id="3-5">8</h4></div>
-                <div class="num-container"><h4 id="3-6">9</h4></div>
-            </div>
-        </div>
-        <!-------------------------Square-3---------------------------------->
-        <div class="square square-top-row">
-            <div class="num-top-row">
-                <div class="num-container"><h4 id="1-7">1</h4></div>
-                <div class="num-container"><h4 id="1-8">2</h4></div>
-                <div class="num-container"><h4 id="1-9">3</h4></div>
-            </div>
-            <div class="num-middle-row">
-                <div class="num-container"><h4 id="2-7">4</h4></div>
-                <div class="num-container"><h4 id="2-8">5</h4></div>
-                <div class="num-container"><h4 id="2-9">6</h4></div>
-            </div>
-            <div class="num-bottom-row">
-                <div class="num-container"><h4 id="3-7">7</h4></div>
-                <div class="num-container"><h4 id="3-8">8</h4></div>
-                <div class="num-container"><h4 id="3-9">9</h4></div>
-            </div>
-        </div>
-        <!-------------------------Square-4---------------------------------->
-        <div class="square square-middle-row">
-            <div class="num-top-row">
-                <div class="num-container"><h4 id="4-1">1</h4></div>
-                <div class="num-container"><h4 id="4-2">2</h4></div>
-                <div class="num-container"><h4 id="4-3">3</h4></div>
-            </div>
-            <div class="num-middle-row">
-                <div class="num-container"><h4 id="5-1">4</h4></div>
-                <div class="num-container"><h4 id="5-2">5</h4></div>
-                <div class="num-container"><h4 id="5-3">6</h4></div>
-            </div>
-            <div class="num-bottom-row">
-                <div class="num-container"><h4 id="6-1">7</h4></div>
-                <div class="num-container"><h4 id="6-2">8</h4></div>
-                <div class="num-container"><h4 id="6-3">9</h4></div>
-            </div>
-        </div>
-        <!-------------------------Square-5---------------------------------->
-        <div class="square square-middle-row">
-            <div class="num-top-row">
-                <div class="num-container"><h4 id="4-4">1</h4></div>
-                <div class="num-container"><h4 id="4-5">2</h4></div>
-                <div class="num-container"><h4 id="4-6">3</h4></div>
-            </div>
-            <div class="num-middle-row">
-                <div class="num-container"><h4 id="5-4">4</h4></div>
-                <div class="num-container"><h4 id="5-5">5</h4></div>
-                <div class="num-container"><h4 id="5-6">6</h4></div>
-            </div>
-            <div class="num-bottom-row">
-                <div class="num-container"><h4 id="6-4">7</h4></div>
-                <div class="num-container"><h4 id="6-5">8</h4></div>
-                <div class="num-container"><h4 id="6-6">9</h4></div>
-            </div>
-        </div>
-        <!-------------------------Square-6---------------------------------->
-        <div class="square square-middle-row">
-            <div class="num-top-row">
-                <div class="num-container"><h4 id="4-7">1</h4></div>
-                <div class="num-container"><h4 id="4-8">2</h4></div>
-                <div class="num-container"><h4 id="4-9">3</h4></div>
-            </div>
-            <div class="num-middle-row">
-                <div class="num-container"><h4 id="5-7">4</h4></div>
-                <div class="num-container"><h4 id="5-8">5</h4></div>
-                <div class="num-container"><h4 id="5-9">6</h4></div>
-            </div>
-            <div class="num-bottom-row">
-                <div class="num-container"><h4 id="6-7">7</h4></div>
-                <div class="num-container"><h4 id="6-8">8</h4></div>
-                <div class="num-container"><h4 id="6-9">9</h4></div>
-            </div>
-        </div>
-        <!-------------------------Square-7---------------------------------->
-        <div class="square square-bottom-row">
-            <div class="num-top-row">
-                <div class="num-container"><h4 id="7-1">1</h4></div>
-                <div class="num-container"><h4 id="7-2">2</h4></div>
-                <div class="num-container"><h4 id="7-3">3</h4></div>
-            </div>
-            <div class="num-middle-row">
-                <div class="num-container"><h4 id="8-1">4</h4></div>
-                <div class="num-container"><h4 id="8-2">5</h4></div>
-                <div class="num-container"><h4 id="8-3">6</h4></div>
-            </div>
-            <div class="num-bottom-row">
-                <div class="num-container"><h4 id="9-1">7</h4></div>
-                <div class="num-container"><h4 id="9-2">8</h4></div>
-                <div class="num-container"><h4 id="9-3">9</h4></div>
-            </div>
-        </div>
-        <!-------------------------Square-8---------------------------------->
-        <div class="square square-bottom-row">
-            <div class="num-top-row">
-                <div class="num-container"><h4 id="7-4">1</h4></div>
-                <div class="num-container"><h4 id="7-5">2</h4></div>
-                <div class="num-container"><h4 id="7-6">3</h4></div>
-            </div>
-            <div class="num-middle-row">
-                <div class="num-container"><h4 id="8-4">4</h4></div>
-                <div class="num-container"><h4 id="8-5">5</h4></div>
-                <div class="num-container"><h4 id="8-6">6</h4></div>
-            </div>
-            <div class="num-bottom-row">
-                <div class="num-container"><h4 id="9-4">7</h4></div>
-                <div class="num-container"><h4 id="9-5">8</h4></div>
-                <div class="num-container"><h4 id="9-6">9</h4></div>
-            </div>
-        </div>
-        <!-------------------------Square-9---------------------------------->
-        <div class="square square-bottom-row">
-            <div class="num-top-row">
-                <div class="num-container"><h4 id="7-7">1</h4></div>
-                <div class="num-container"><h4 id="7-8">2</h4></div>
-                <div class="num-container"><h4 id="7-9">3</h4></div>
-            </div>
-            <div class="num-middle-row">
-                <div class="num-container"><h4 id="8-7">4</h4></div>
-                <div class="num-container"><h4 id="8-8">5</h4></div>
-                <div class="num-container"><h4 id="8-9">6</h4></div>
-            </div>
-            <div class="num-bottom-row">
-                <div class="num-container"><h4 id="9-7">7</h4></div>
-                <div class="num-container"><h4 id="9-8">8</h4></div>
-                <div class="num-container"><h4 id="9-9">9</h4></div>
-            </div>
-        </div>
+    <section id="game-section" th:replace="game-board-patch :: game-board-patch">
+
     </section>
 </div>
 <!------------------------------Hover-Selection------------------------------>
@@ -221,6 +63,7 @@
 <noscript>
     <h1>JavaScript is required to run this application.</h1>
 </noscript>
-<script src="../static/script.js" type="module"></script>
+<!--<script src="../static/script.js" type="module" th:src="@{/script.js}"></script>-->
+<script src="../static/request-script.js" type="module" th:src="@{/request-script.js}"></script>
 </body>
 </html>
