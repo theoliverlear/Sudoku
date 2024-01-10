@@ -1,4 +1,4 @@
-package org.theoliverlear.v2;
+package org.theoliverlear.model;
 
 import java.util.ArrayList;
 
@@ -38,5 +38,9 @@ public class MutedBoard extends Board {
         int[] muteIndex = {row - 1, column - 1};
         BoardIndex boardIndex = new BoardIndex(muteIndex);
         this.mutedBoardIndices.add(boardIndex);
+    }
+
+    public ArrayList<BoardIndex> getMutedBoardIndices() {
+        return this.mutedBoardIndices;
     }
 }

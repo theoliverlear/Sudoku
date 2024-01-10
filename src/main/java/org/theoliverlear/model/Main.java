@@ -1,4 +1,4 @@
-package org.theoliverlear.v2;
+package org.theoliverlear.model;
 
 public class Main {
     public static void main(String[] args) {

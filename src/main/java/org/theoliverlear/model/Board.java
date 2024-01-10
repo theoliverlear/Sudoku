@@ -1,4 +1,4 @@
-package org.theoliverlear.v2;
+package org.theoliverlear.model;
 
 import java.util.ArrayList;
 import java.util.Arrays;

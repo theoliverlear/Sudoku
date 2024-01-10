@@ -1,4 +1,4 @@
-package org.theoliverlear.v2;
+package org.theoliverlear.model;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -74,4 +74,10 @@ public class Sudoku {
     public Board getBoard() {
         return this.board;
     }
+
+    //=============================-Setters-==================================
+    public void setBoard(Board board) {
+        this.board = board;
+    }
+
 }

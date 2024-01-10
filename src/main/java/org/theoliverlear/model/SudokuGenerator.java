@@ -1,21 +1,21 @@
-package org.theoliverlear.v2;
+package org.theoliverlear.model;
 
 import java.time.Instant;
 import java.util.*;
 
-public class SudokuGeneratorV2 {
+public class SudokuGenerator {
     Sudoku sudoku;
     final int rowLength;
     final int colLength;
     HashMap<Board, HashSet<Integer>> numsTriedAtBoard;
     //===========================-Constructors-===============================
-    public SudokuGeneratorV2() {
+    public SudokuGenerator() {
         this.sudoku = new Sudoku();
         this.rowLength = this.sudoku.getBoard().getRowLength();
         this.colLength = this.sudoku.getBoard().getColLength();
         this.numsTriedAtBoard = new HashMap<>();
     }
-    public SudokuGeneratorV2(MutedBoard mutedBoard) {
+    public SudokuGenerator(MutedBoard mutedBoard) {
         this.sudoku = new Sudoku(mutedBoard);
         this.rowLength = this.sudoku.getBoard().getRowLength();
         this.colLength = this.sudoku.getBoard().getColLength();
@@ -247,7 +247,7 @@ public class SudokuGeneratorV2 {
         // Logging the start time of the method. If the method takes longer
         // than 5 seconds, then the method will recursively call itself to
         // generate a new board.
-        final int MAX_TIME = 3;
+        final int MAX_TIME = 1;
         long startTime = Instant.now().getEpochSecond();
         int number = new Random().nextInt(9) + 1;
         int currentFailingNum = -1;
@@ -440,6 +440,7 @@ public class SudokuGeneratorV2 {
                 }
             }
         }
+        this.getSudoku().getBoard().printBoard();
     }
     /*
     1. Move to board index
@@ -644,6 +645,17 @@ public class SudokuGeneratorV2 {
         }
         return placeableIndexes;
     }
+    public MutedBoard getMutedBoardFromBoard(int numMuted) {
+        Board startingBoard = new Board();
+        for (int i = 0; i < numMuted; i++) {
+            BoardIndex randIndex = this.getRandomIndex();
+            int rowIndex = randIndex.getRowIndex();
+            int colIndex = randIndex.getColumnIndex();
+            int value = this.sudoku.getBoard().getNumber(rowIndex + 1, colIndex + 1);
+            startingBoard.placeNumber(rowIndex + 1, colIndex + 1, value);
+        }
+        return new MutedBoard(startingBoard);
+    }
     public void generateValidMutedBoard(int numMuted) {
         // This method generates a valid muted board by generating a valid
         // board and then muting a given number of indices.
@@ -671,7 +683,7 @@ public class SudokuGeneratorV2 {
         this.sudoku.getBoard().placeNumber(1, 1, 4);
     }
     public static void main(String[] args) {
-            SudokuGeneratorV2 sudokuGenerator = new SudokuGeneratorV2();
+            SudokuGenerator sudokuGenerator = new SudokuGenerator();
             sudokuGenerator.sudoku.getBoard().printBoard();
             sudokuGenerator.generateBoardRandomly();
             System.out.println("=".repeat(21));
