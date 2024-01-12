@@ -7,7 +7,7 @@ public class MutedBoard extends Board {
     public MutedBoard() {
         super();
     }
-    ArrayList<BoardIndex> mutedBoardIndices = new ArrayList<>();
+    ArrayList<BoardIndex> mutedIndices = new ArrayList<>();
     public MutedBoard(int[][] mutedBoard) {
         super(mutedBoard);
         this.fetchMutedIndices();
@@ -30,17 +30,17 @@ public class MutedBoard extends Board {
     public void placeNumber(int row, int column, int number) {
         int[] potentialPlaceIndex = {row - 1, column - 1};
         BoardIndex boardIndex = new BoardIndex(potentialPlaceIndex);
-        if (!this.mutedBoardIndices.contains(boardIndex)) {
+        if (!this.mutedIndices.contains(boardIndex)) {
             super.placeNumber(row, column, number);
         }
     }
     public void muteBoardIndex(int row, int column) {
         int[] muteIndex = {row - 1, column - 1};
         BoardIndex boardIndex = new BoardIndex(muteIndex);
-        this.mutedBoardIndices.add(boardIndex);
+        this.mutedIndices.add(boardIndex);
     }
 
-    public ArrayList<BoardIndex> getMutedBoardIndices() {
-        return this.mutedBoardIndices;
+    public ArrayList<BoardIndex> getMutedIndices() {
+        return this.mutedIndices;
     }
 }
