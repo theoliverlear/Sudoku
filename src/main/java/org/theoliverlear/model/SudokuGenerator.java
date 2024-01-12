@@ -647,8 +647,16 @@ public class SudokuGenerator {
     }
     public MutedBoard getMutedBoardFromBoard(int numMuted) {
         Board startingBoard = new Board();
+        ArrayList<BoardIndex> mutedIndices = new ArrayList<>();
         for (int i = 0; i < numMuted; i++) {
-            BoardIndex randIndex = this.getRandomIndex();
+            BoardIndex randIndex;
+            while (true) {
+                randIndex = this.getRandomIndex();
+                if (!mutedIndices.contains(randIndex)) {
+                    mutedIndices.add(randIndex);
+                    break;
+                }
+            }
             int rowIndex = randIndex.getRowIndex();
             int colIndex = randIndex.getColumnIndex();
             int value = this.sudoku.getBoard().getNumber(rowIndex + 1, colIndex + 1);
