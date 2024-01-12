@@ -1,3 +1,4 @@
+/*--------------General-Content--------------*/
 body {
     background-color: rgba(128, 36, 36, 0.5);
     margin: 0;
@@ -6,6 +7,35 @@ body {
     box-shadow: antiquewhite 0.25vw 0.25vw 0.25vw;
     background-image: -moz-linear-gradient( 90deg, rgb(128, 36, 36) 0%, rgb(189, 53, 53) 50%, rgb(252, 122, 122) 100%);
 }
+h1 {
+    font-size: calc((3vw + 3vh) / 2);
+    margin: 0;
+    padding: 0;
+}
+h2 {
+    font-size: calc((2.25vw + 2.25vh) / 2);
+    margin: 0;
+    padding: 0;
+}
+h3 {
+    font-size: calc((1.75vw + 1.75vh) / 2);
+    margin: 0;
+    padding: 0;
+}
+h4 {
+    font-size: 1.75vw;
+    padding: 0;
+    margin: 0;
+}
+.centered-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+/*-------------------Title-------------------*/
 #title {
     font-size: 8vw;
     letter-spacing: 0.25vw;
@@ -16,6 +46,7 @@ body {
     border-radius: 0.5vw;
     background-color: rgba(255, 255, 255, 0.9);
 }
+/*------------------Buttons------------------*/
 #button-section {
     width: 50vw;
     display: flex;
@@ -28,7 +59,7 @@ body {
     letter-spacing: 0.25vw;
     font-style: italic;
     margin: 0;
-    border: 0.25vw solid black;
+    border: calc((0.3vw + 0.3vh) / 2) solid black;
     border-radius: 0.5vw;
     background-color: rgba(255, 255, 255, 0.9);
     text-align: center;
@@ -37,18 +68,8 @@ body {
     flex-basis: 20vw;
     margin: 0 0 2.5vw 0;
 }
-h2 {
-    font-size: 2vw;
-    margin: 0;
-    padding: 0;
-}
-h4 {
-    font-size: 1.75vw;
-    padding: 0;
-    margin: 0;
-}
 .button .button-text {
-    transition: background-color 0.15s, box-shadow 0.5s, letter-spacing 0.65s;
+    transition: background-color 0.15s, box-shadow 0.5s, letter-spacing 0.5s;
 }
 .button:hover .button-text {
     box-shadow: rgba(28, 18, 18, 0.71) 0 0 1.25vw;
@@ -59,6 +80,85 @@ h4 {
     background-color: rgba(63, 2, 2, 0.8);
     box-shadow: rgba(28, 18, 18, 0.71) 0 0 0.25vw;
 }
+/*--------------Difficulty-Menu--------------*/
+#difficulty-section {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+#difficulty-container {
+    width: 15vw;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 0 0 2vh 0;
+    padding: 0;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: calc((1vw + 1vh) / 2);
+    border: calc((0.3vw + 0.3vh) / 2) solid black;
+}
+#difficulty-title-text-container {
+    width: 100%;
+    height: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    background-color: black;
+}
+#difficulty-title-text {
+    font-size: 2vw;
+    letter-spacing: 0.25vw;
+    font-style: italic;
+    border-bottom: black calc((0.3vw + 0.3vh) / 2) solid;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    color: rgba(255, 255, 255, 0.9);
+}
+#difficulty-container ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 60%;
+    text-align: center;
+    border-top: black calc((0.3vw + 0.3vh) / 2) solid;
+}
+#difficulty-container li {
+    font-size: 1.5vw;
+    letter-spacing: 0.25vw;
+    font-style: italic;
+    margin: 0;
+    padding: 1vh 0;
+    border-bottom: black calc((0.3vw + 0.3vh) / 2) solid;
+    height: 15%;
+    transition: box-shadow, letter-spacing 0.15s;
+}
+#difficulty-container li:hover {
+    box-shadow: rgba(28, 18, 18, 0.71) 0 0 1.25vw;
+    letter-spacing: 0.35vw;
+    cursor: pointer;
+}
+/*-------------------Timer-------------------*/
+#timer-section {
+    width: 5vw;
+    height: 2.5vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 0 calc((2vw + 2vh) / 2) 0;
+    padding: 1vh 2vw;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: calc((1vw + 1vh) / 2);
+    border: 0.25vw solid black;
+}
+/*-----------------Game-Board----------------*/
 .square {
     width: 6vw;
     height: 6vw;
@@ -115,14 +215,7 @@ h4 {
     background-color: rgba(255, 0, 0, 0.5);
     cursor: pointer;
 }
-.centered-div {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: 0;
-    padding: 0;
-}
+/*--------------Number-Selection-------------*/
 .hover-num-container {
     width: 100%;
     height: 100%;
