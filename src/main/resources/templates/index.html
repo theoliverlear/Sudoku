@@ -7,6 +7,8 @@
     <title>Sudoku</title>
     <link rel="stylesheet" href="../static/style.css"
           th:href="@{/style.css}">
+    <link rel="icon" href="../static/favicon/sudoku_icon.ico"
+          th:href="@{/favicon/sudoku_icon.ico}">
 </head>
 <body>
 <div class="centered-div">
@@ -21,8 +23,34 @@
             <h2 id="check-button" class="button-text">Check</h2>
         </div>
     </section>
-    <!-- TODO: Numbers that are preset will be double outline sized and
-               unclickable -->
+    <section id="difficulty-section">
+        <div id="difficulty-container">
+            <div id="difficulty-title-text-container">
+                <h2 id="difficulty-title-text">Difficulty</h2>
+            </div>
+            <ul>
+                <li class="difficulty-option">
+                    <h3>Beginner</h3>
+                </li>
+                <li class="difficulty-option">
+                    <h3>Easy</h3>
+                </li>
+                <li class="difficulty-option">
+                    <h3>Medium</h3>
+                </li>
+                <li class="difficulty-option">
+                    <h3>Hard</h3>
+                </li>
+                <li class="difficulty-option">
+                    <h3>Expert</h3>
+                </li>
+            </ul>
+        </div>
+    </section>
+    <!-------------------------------Timer----------------------------------->
+    <section id="timer-section">
+        <h2 id="timer">00:00</h2>
+    </section>
     <!-------------------------------Board----------------------------------->
     <section id="game-section" th:replace="game-board-patch :: game-board-patch">
 
@@ -32,6 +60,9 @@
 <section id="hover-selection">
     <div class="num-top-row" id="num-hover-container">
         <div class="hover-num-container" id="left-side-hover">
+            <h4 class="choice-num" id="choice-none">&nbsp;</h4>
+        </div>
+        <div class="hover-num-container">
             <h4 class="choice-num" id="choice-1">1</h4>
         </div>
         <div class="hover-num-container">
@@ -63,7 +94,6 @@
 <noscript>
     <h1>JavaScript is required to run this application.</h1>
 </noscript>
-<!--<script src="../static/script.js" type="module" th:src="@{/script.js}"></script>-->
-<script src="../static/request-script.js" type="module" th:src="@{/request-script.js}"></script>
+<script src="../static/request-script.js" th:src="@{/request-script.js}"></script>
 </body>
 </html>
