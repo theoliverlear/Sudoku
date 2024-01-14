@@ -1,4 +1,4 @@
-package org.theoliverlear.model;
+package org.theoliverlear.model.sudoku;
 
 public class Main {
     public static void main(String[] args) {

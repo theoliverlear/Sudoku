@@ -1,4 +1,4 @@
-package org.theoliverlear.model;
+package org.theoliverlear.model.sudoku;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;

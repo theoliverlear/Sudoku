@@ -1,4 +1,4 @@
-package org.theoliverlear.model;
+package org.theoliverlear.model.sudoku;
 
 /**
  * Enumeration class representing different difficulty levels in a Sudoku game.
