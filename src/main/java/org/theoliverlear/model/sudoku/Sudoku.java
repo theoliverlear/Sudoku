@@ -1,5 +1,8 @@
 package org.theoliverlear.model.sudoku;
 
+import org.theoliverlear.entity.Board;
+import org.theoliverlear.entity.MutedBoard;
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 

@@ -1,8 +1,8 @@
 package v2;
 
 import org.junit.jupiter.api.Test;
-import org.theoliverlear.model.sudoku.Board;
-import org.theoliverlear.model.sudoku.MutedBoard;
+import org.theoliverlear.entity.Board;
+import org.theoliverlear.entity.MutedBoard;
 import org.theoliverlear.model.sudoku.SudokuGenerator;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -48,7 +48,7 @@ public class SudokuGeneratorTest {
     SudokuGenerator sudokuGeneratorMutedBoardTest = new SudokuGenerator(mutedBoard);
     @Test
     public void testMutedIndices() {
-        this.sudokuGeneratorMutedBoardTest.generateBoard();
+        this.sudokuGeneratorMutedBoardTest.generateBoardSequentially();
         this.sudokuGeneratorMutedBoardTest.getSudoku().getBoard().printBoard();
         assertTrue(this.sudokuGeneratorMutedBoardTest.getSudoku().getBoard().getNumber(1, 1) == 2);
         assertTrue(this.sudokuGeneratorMutedBoardTest.getSudoku().getBoard().getNumber(1, 2) == 6);

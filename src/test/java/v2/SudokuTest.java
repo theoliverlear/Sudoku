@@ -2,7 +2,7 @@ package v2;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.theoliverlear.model.sudoku.Board;
+import org.theoliverlear.entity.Board;
 import org.theoliverlear.model.sudoku.Sudoku;
 
 import static org.junit.Assert.assertTrue;

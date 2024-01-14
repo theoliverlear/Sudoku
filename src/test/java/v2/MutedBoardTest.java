@@ -1,10 +1,8 @@
 package v2;
 
 import org.junit.Test;
-import org.theoliverlear.model.sudoku.MutedBoard;
-
+import org.theoliverlear.entity.MutedBoard;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class MutedBoardTest {
     int[][] board = {

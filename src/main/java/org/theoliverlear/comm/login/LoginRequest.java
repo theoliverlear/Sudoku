@@ -1,4 +1,4 @@
-package org.theoliverlear.model.user.login;
+package org.theoliverlear.comm.login;
 
 public class LoginRequest {
     private String username;
