@@ -1,3 +1,74 @@
+//==================================-Login-===================================
+let loginButton = document.getElementById('login-popup-button');
+let loginPopup = document.getElementById('login-section');
+let loginCloseButton = document.getElementById('close-login-img');
+
+function popupLogin() {
+    loginPopup.style.display = "block";
+}
+function closeLogin() {
+    loginPopup.style.display = "none";
+    hideInvalidLoginText();
+    clearInputFields();
+}
+loginButton.addEventListener("click", popupLogin);
+loginCloseButton.addEventListener("click", closeLogin);
+
+//------------------------------Submit-Login----------------------------------
+let loginSuccess = false; // SHINING VARIABLE
+let loginSubmitButton = document.getElementById('login-button-div');
+let username = document.getElementById('login-username-input');
+let password = document.getElementById('login-password-input');
+function submitLogin() {
+    let usernameText = username.value;
+    let passwordText = password.value;
+    let xmlRequestString = getLoginRequestXml(usernameText, passwordText);
+    let request = new XMLHttpRequest();
+    request.open("POST", `/login`);
+    request.setRequestHeader("Content-Type", "text/xml");
+    request.onload = function () {
+        loginSuccess = request.responseText;
+        if (loginSuccess === "true") {
+            hideInvalidLoginText();
+            closeLogin();
+            clearInputFields();
+            loginButton.style.display = "none";
+        } else {
+            revealInvalidLoginText();
+        }
+    }
+    request.send(xmlRequestString);
+}
+loginSubmitButton.addEventListener("click", submitLogin);
+//----------------------------Clear-Input-Fields------------------------------
+function clearInputFields() {
+    username.value = "";
+    password.value = "";
+}
+//----------------------------Invalid-Login-Popup-----------------------------
+let invalidLoginPopup = document.getElementById('invalid-login-div');
+let loginSection = document.getElementById('login-section');
+function revealInvalidLoginText() {
+    loginSection.style.height = "25vh"
+    invalidLoginPopup.style.display = "flex";
+}
+function hideInvalidLoginText() {
+    loginSection.style.height = "22vh"
+    invalidLoginPopup.style.display = "none";
+}
+
+//---------------------------Get-Login-Request-XML----------------------------
+function getLoginRequestXml(username, password) {
+    let xmlRequestString = `
+    <LoginRequest>
+        <username>${username}</username>
+        <password>${password}</password>
+    </LoginRequest>
+`;
+    return xmlRequestString;
+    
+}
+
 //==================================-Timer-===================================
 
 //--------------------------------Time-Counter--------------------------------
@@ -78,6 +149,19 @@ difficultyButtonsArray.forEach(button => {
     
     button.addEventListener("click", setDifficulty);
 });
+
+let difficultyMenuCloseButton = document.getElementById('close-difficulty-img');
+function makeCloseTabImgRed() {
+    difficultyMenuCloseButton.src = "../static/images/close_tab_red_x.svg";
+}
+function makeCloseTabImgWhite() {
+    difficultyMenuCloseButton.src = "../static/images/close_tab_x.svg";
+}
+
+difficultyMenuCloseButton.addEventListener("mouseover", makeCloseTabImgRed);
+difficultyMenuCloseButton.addEventListener("mouseout", makeCloseTabImgWhite);
+
+difficultyMenuCloseButton.addEventListener("click", closeDifficultyMenu);
 //-----------------------------Set-Difficulty---------------------------------
 function setDifficulty() {
     let difficulty = this.children[0].innerText;
