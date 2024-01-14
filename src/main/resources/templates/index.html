@@ -13,9 +13,39 @@
 <body>
 <div class="centered-div">
     <!-------------------------------Title----------------------------------->
-    <h1 id="title">Sudoku</h1>
-    <!------------------------------Buttons---------------------------------->
-    <section id="button-section">
+    <section id="title-section">
+        <h1 id="title">Sudoku</h1>
+    </section>
+    <!-------------------------------Buttons--------------------------------->
+    <!-- Shining variables:
+         - #top-button-section: container for all buttons in the top section
+         - #login-signup-button-section: container for login and signup buttons
+         - #logged-in-button-section: container for logged in features
+    -->
+    <section id="top-button-section">
+        <section id="login-signup-button-section">
+            <div class="button" id="login-popup-button">
+                <h2 class="button-text">Login</h2>
+            </div>
+            <div class="button">
+                <h2 class="button-text">Sign-up</h2>
+            </div>
+        </section>
+        <section id="logged-in-button-section">
+            <div class="button">
+                <h2 class="button-text">Account Name</h2>
+            </div>
+            <div class="button">
+                <h2 class="button-text">Save Board</h2>
+            </div>
+            <div class="button">
+                <h2 class="button-text">Logout</h2>
+            </div>
+        </section>
+    </section>
+    <hr />
+    <!------------------------------Game-Buttons----------------------------->
+    <section id="bottom-button-section">
         <div id="new-game-div" class="button">
             <h2 id="new-game-button" class="button-text">New Game</h2>
         </div>
@@ -23,11 +53,15 @@
             <h2 id="check-button" class="button-text">Check</h2>
         </div>
     </section>
+    <!---------------------------Difficulty-Menu----------------------------->
     <section id="difficulty-section">
         <div id="difficulty-container">
             <div id="difficulty-title-text-container">
                 <h2 id="difficulty-title-text">Difficulty</h2>
+                <img id="close-difficulty-img" src="../static/images/close_tab_x.svg"
+                     th:src="@{/images/close_tab_x.svg}">
             </div>
+            <!---------------------Difficulty-Options------------------------>
             <ul>
                 <li class="difficulty-option">
                     <h3>Beginner</h3>
@@ -45,6 +79,34 @@
                     <h3>Expert</h3>
                 </li>
             </ul>
+        </div>
+    </section>
+    <!---------------------------------Login--------------------------------->
+    <!-- Shining Variables
+         - #login-section: container for login popup
+         - #invalid-login-div: container for invalid login message
+     -->
+    <section id="login-section">
+        <div id="login-container">
+            <div id="login-title-text-container">
+                <h2 id="login-title-text">Sudoku Account</h2>
+                <img id="close-login-img" src="../static/images/close_tab_black_x.svg"
+                     th:src="@{/images/close_tab_black_x.svg}" alt="close tab">
+            </div>
+            <div id="login-input-div">
+                <input id="login-username-input" class="login-signup-input"
+                       type="text" placeholder="  Username">
+                <input id="login-password-input" class="login-signup-input"
+                       type="password" placeholder="  Password">
+            </div>
+            <!---------------------Invalid-Login----------------------------->
+            <div id="invalid-login-div">
+                <h4 id="invalid-login-text">Invalid username or password.</h4>
+            </div>
+            <!---------------------Login-Button----------------------------->
+            <div id="login-button-div" class="button">
+                <h2 id="login-button" class="button-text">Login</h2>
+            </div>
         </div>
     </section>
     <!-------------------------------Timer----------------------------------->
