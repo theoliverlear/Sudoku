@@ -7,10 +7,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.theoliverlear.model.sudoku.Board;
+import org.theoliverlear.entity.Board;
 import org.theoliverlear.model.sudoku.BoardIndex;
 import org.theoliverlear.model.sudoku.Difficulty;
-import org.theoliverlear.model.sudoku.MutedBoard;
+import org.theoliverlear.entity.MutedBoard;
 import org.theoliverlear.service.SudokuService;
 
 import java.util.ArrayList;
@@ -77,11 +77,13 @@ public class SudokuController {
         String spotLeftNum = this.sudokuService.numToWord(row);
         String spotRightNum = this.sudokuService.numToWord(col);
         String spotModelNum = spotLeftNum + "_" + spotRightNum;
-
+        //--------------------------Is-Spot-Muted-----------------------------
+        // Built muted board and retrieve muted indices.
         MutedBoard currentBoard = (MutedBoard) this.sudokuService.getSudoku()
                                                                  .getBoard();
         ArrayList<BoardIndex> mutedBoardIndices = currentBoard.getMutedIndices();
         boolean isMuted = false;
+        // If the spot is muted, do not render the number.
         for (BoardIndex index : mutedBoardIndices) {
             if (index.getRowIndex() == row - 1 && index.getColumnIndex() == col - 1) {
                 isMuted = true;
@@ -103,25 +105,36 @@ public class SudokuController {
     //----------------------------Is-Spot-Muted-------------------------------
     @RequestMapping("/muted/{spot}")
     public ResponseEntity<String> isSpotMuted(@PathVariable String spot) {
+        // Split the spot string into row and column numbers. This will be
+        // used to evaluate if the spot is muted.
         int[] spotSplit = this.sudokuService.getRowColFromSpot(spot);
         int row = spotSplit[0];
         int col = spotSplit[1];
+        // Build muted board and retrieve muted indices.
         MutedBoard mutedBoard = (MutedBoard) this.sudokuService.getSudoku().getBoard();
         ArrayList<BoardIndex> mutedBoardIndices = mutedBoard.getMutedIndices();
+        // For each muted index, check if the row and column match the spot.
+        // If it matches, it is a member of the muted board and is muted. A
+        // response of true is returned.
         for (BoardIndex index : mutedBoardIndices) {
             if (index.getRowIndex() == row - 1 && index.getColumnIndex() == col - 1) {
                 System.out.println("Spot " + spot + " is muted");
                 return new ResponseEntity<>("true", HttpStatus.OK);
             }
         }
+        // If none of the spots match, the spot is not muted. A response of
+        // false is returned.
         System.out.println("Spot " + spot + " is not muted");
         return new ResponseEntity<>("false", HttpStatus.OK);
     }
     //--------------------------Is-Winning-Board------------------------------
     @RequestMapping("/check")
     public ResponseEntity<String> check() {
+        // Get the current board and check if it is a winning board.
         Board currentBoard = this.sudokuService.getSudoku().getBoard();
         boolean isWinningBoard = currentBoard.isWinningBoard();
+        // If it is a winning board, return true. If it is not a winning
+        // board, return false.
         if (isWinningBoard) {
             return new ResponseEntity<>("true", HttpStatus.OK);
         }
@@ -131,9 +144,17 @@ public class SudokuController {
     @RequestMapping("/difficulty/{difficulty}")
     public ResponseEntity<String> setDifficulty(@PathVariable String difficulty) {
         System.out.println("Chosen Difficulty: " + difficulty);
-        difficulty = difficulty.trim().replaceAll("\\r", "").replaceAll("\\n", "");
+        // Trim the difficulty string and remove any extra characters
+        // including spaces and newlines.
+        difficulty = difficulty.trim()
+                               .replaceAll("\\r", "")
+                               .replaceAll("\\n", "");
+        // Parse the difficulty string into a Difficulty enum.
         Difficulty difficultyLevel = SudokuService.getDifficulty(difficulty);
+        // Set the current difficulty to the parsed difficulty.
         this.currentDifficulty = difficultyLevel;
-        return new ResponseEntity<>("difficulty: " + difficulty, HttpStatus.OK);
+        // Return the difficulty level and an OK status to indicate that the
+        // method was fully successful.
+        return new ResponseEntity<>("Difficulty: " + difficulty, HttpStatus.OK);
     }
 }
