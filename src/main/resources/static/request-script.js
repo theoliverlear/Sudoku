@@ -2,7 +2,6 @@
 let loginButton = document.getElementById('login-popup-button');
 let loginPopup = document.getElementById('login-section');
 let loginCloseButton = document.getElementById('close-login-img');
-
 function popupLogin() {
     loginPopup.style.display = "block";
 }
@@ -13,6 +12,15 @@ function closeLogin() {
 }
 loginButton.addEventListener("click", popupLogin);
 loginCloseButton.addEventListener("click", closeLogin);
+//----------------------Highlight-Login-Close-Button--------------------------
+function makeLoginCloseImgRed() {
+    loginCloseButton.src = "../static/images/close_tab_red_x.svg";
+}
+function makeLoginCloseImgBlack() {
+    loginCloseButton.src = "../static/images/close_tab_black_x.svg";
+}
+loginCloseButton.addEventListener("mouseover", makeLoginCloseImgRed);
+loginCloseButton.addEventListener("mouseout", makeLoginCloseImgBlack);
 
 //------------------------------Submit-Login----------------------------------
 let loginSuccess = false; // SHINING VARIABLE
@@ -24,7 +32,7 @@ function submitLogin() {
     let passwordText = password.value;
     let xmlRequestString = getLoginRequestXml(usernameText, passwordText);
     let request = new XMLHttpRequest();
-    request.open("POST", `/login`);
+    request.open("POST", `/user/login`);
     request.setRequestHeader("Content-Type", "text/xml");
     request.onload = function () {
         loginSuccess = request.responseText;
@@ -66,9 +74,7 @@ function getLoginRequestXml(username, password) {
     </LoginRequest>
 `;
     return xmlRequestString;
-    
 }
-
 //==================================-Timer-===================================
 
 //--------------------------------Time-Counter--------------------------------
@@ -157,7 +163,6 @@ function makeCloseTabImgRed() {
 function makeCloseTabImgWhite() {
     difficultyMenuCloseButton.src = "../static/images/close_tab_x.svg";
 }
-
 difficultyMenuCloseButton.addEventListener("mouseover", makeCloseTabImgRed);
 difficultyMenuCloseButton.addEventListener("mouseout", makeCloseTabImgWhite);
 
@@ -285,7 +290,6 @@ function makeMove(spotChoice, spotNumberChoice) {
     }
     request.send();
 }
-
 //==============================-Check-Board-=================================
 /**
  * Represents the checkBoardButton element in the DOM.
@@ -324,6 +328,13 @@ function checkBoard() {
 checkBoardButton.addEventListener("click", checkBoard);
 //============================-Attach-Listeners-==============================
 
+/**
+ * Attaches event listeners to various elements in the DOM. When an event
+ * changes major elements in the DOM, the event listeners are affected and
+ * need to be re-attached.
+ *
+ * @returns {void}
+ */
 function attachListeners() {
     const mutedColor = "#cccccc";
     //-----------------------------Set-Difficulty-----------------------------
@@ -341,9 +352,6 @@ function attachListeners() {
     newGameButton = document.getElementById('new-game-div');
     newGameButton.removeEventListener("click", popupDifficultyMenu);
     newGameButton.addEventListener("click", popupDifficultyMenu);
-    
-    // newGameButton.addEventListener("click", newGame);
-    // newGameButton.addEventListener("click", newGame);
     //----------------------------Mouse-Movements-----------------------------
     mouseCords = {x: 0, y: 0};
     document.removeEventListener("mousemove", monitorMouseCords);
@@ -372,5 +380,4 @@ function attachListeners() {
         boardNum.removeEventListener("click", selectBoardNumber);
         boardNum.addEventListener("click", selectBoardNumber);
     });
-
 }
