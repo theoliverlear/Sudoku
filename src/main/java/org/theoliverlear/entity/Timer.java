@@ -1,6 +1,12 @@
-package org.theoliverlear.model.sudoku;
+package org.theoliverlear.entity;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
+@Entity
 public class Timer {
+    //=============================-Variables-================================
+    @Id
     private String time;
     private int seconds;
     private int minutes;

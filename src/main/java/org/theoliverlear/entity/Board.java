@@ -1,9 +1,22 @@
-package org.theoliverlear.model.sudoku;
+package org.theoliverlear.entity;
 
+import jakarta.persistence.*;
+import org.theoliverlear.entity.convert.BoardArrayJsonConverter;
+
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Board {
+@Entity
+public class Board implements Serializable {
+    //=============================-Variables-================================
+    @Serial
+    private static final long serialVersionUID = 81L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Convert(converter = BoardArrayJsonConverter.class)
     int[][] board;
     final int colLength;
     final int rowLength;
@@ -161,6 +174,7 @@ public class Board {
                 {startRow, endRow},
                 {startCol, endCol}};
     }
+    //-----------------------------Fetch-Square-------------------------------
     public int fetchSquare(int row, int column) {
         int square = 0;
         if (row <= 3 && column <= 3) {
@@ -276,9 +290,12 @@ public class Board {
     public int getColLength() {
         return this.colLength;
     }
+    public Long getId() {
+        return this.id;
+    }
     //=============================-Setters-==================================
+
     public void setBoard(int[][] board) {
         this.board = board;
     }
-
 }
