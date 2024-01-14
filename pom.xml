@@ -26,7 +26,7 @@ used by Maven to build the project.
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.1.2</version>
+        <version>3.1.5</version>
         <relativePath/>
     </parent>
     <!--=========================-Dependencies-============================-->
@@ -125,6 +125,29 @@ used by Maven to build the project.
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <version>2.1.214</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- JDBC Starter tools for connecting to databases -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+        </dependency>
+        <!--
+        Spring Security is a framework that focuses on providing both
+        authentication and authorization to Java applications
+        -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <!--
+        Spring Data JPA is a framework that allows us to easily implement
+        JPA based repositories
+        -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
     </dependencies>
 </project>
