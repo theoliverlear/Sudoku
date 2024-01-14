@@ -2,6 +2,7 @@ package org.theoliverlear.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.theoliverlear.entity.MutedBoard;
 import org.theoliverlear.model.sudoku.*;
 
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import java.util.Arrays;
  */
 @Service
 public class SudokuService {
+    //=============================-Variables-================================
     private static ArrayList<Difficulty> difficulties = new ArrayList<>(Arrays.asList(Difficulty.values()));
     private SudokuGenerator sudokuGenerator = new SudokuGenerator();
     private Sudoku sudoku;
@@ -233,7 +235,6 @@ public class SudokuService {
         }
     }
     //----------------------------Render-Violation----------------------------
-
     /**
      * Renders the violation at a specific spot on the model.
      * @param model the model to render the violation on
