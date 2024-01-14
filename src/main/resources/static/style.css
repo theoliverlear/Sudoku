@@ -4,7 +4,10 @@ body {
     margin: 0;
     padding: 0;
     box-shadow: antiquewhite 0.25vw 0.25vw 0.25vw;
-    background-image: -moz-linear-gradient( 90deg, rgb(128, 36, 36) 0%, rgb(189, 53, 53) 50%, rgb(252, 122, 122) 100%);
+    background-image: -moz-linear-gradient(90deg,
+                                           rgb(128, 36, 36) 0%,
+                                           rgb(189, 53, 53) 50%,
+                                           rgb(252, 122, 122) 100%);
 }
 h1 {
     font-size: calc((3vw + 3vh) / 2);
@@ -125,7 +128,9 @@ h4 {
     margin: 0 0 2.5vw 0;
 }
 .button .button-text {
-    transition: background-color 0.15s, box-shadow 0.5s, letter-spacing 0.5s;
+    transition: background-color 0.15s,
+                box-shadow 0.5s,
+                letter-spacing 0.5s;
 }
 .button:hover .button-text {
     box-shadow: rgba(28, 18, 18, 0.71) 0 0 1.25vw;
@@ -164,6 +169,8 @@ h4 {
     align-items: center;
     padding: 0;
     background-color: black;
+    border-radius: calc((0.25vw + 0.25vh) / 2)
+                   calc((0.25vw + 0.25vh) / 2) 0 0;
 }
 #difficulty-title-text {
     font-size: 2vw;
@@ -254,7 +261,7 @@ h4 {
 #login-section #close-login-img {
     width: 1.5vw;
     height: auto;
-    margin: 0 0 1vh 6.8vw;
+    margin: 0 0 1vh calc((3.5vw + 3.5vh) / 2);
     padding: 0;
     transition: border, box-shadow 0.5s;
     border: none;
@@ -285,9 +292,9 @@ h4 {
     font-style: italic;
 }
 #invalid-login-div {
-    width: 80%;
+    width: 90%;
     height: 30%;
-    display: flex;
+    /*display: flex;*/
     justify-content: center;
     align-items: center;
     padding: 0;
