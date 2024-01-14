@@ -7,15 +7,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.theoliverlear.model.Board;
-import org.theoliverlear.model.BoardIndex;
-import org.theoliverlear.model.Difficulty;
-import org.theoliverlear.model.MutedBoard;
+import org.theoliverlear.model.sudoku.Board;
+import org.theoliverlear.model.sudoku.BoardIndex;
+import org.theoliverlear.model.sudoku.Difficulty;
+import org.theoliverlear.model.sudoku.MutedBoard;
 import org.theoliverlear.service.SudokuService;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 
 @Controller

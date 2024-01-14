@@ -2,7 +2,7 @@ package org.theoliverlear.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
-import org.theoliverlear.model.*;
+import org.theoliverlear.model.sudoku.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;

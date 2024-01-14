@@ -1,9 +1,9 @@
 package v2;
 
 import org.junit.jupiter.api.Test;
-import org.theoliverlear.model.Board;
-import org.theoliverlear.model.MutedBoard;
-import org.theoliverlear.model.SudokuGenerator;
+import org.theoliverlear.model.sudoku.Board;
+import org.theoliverlear.model.sudoku.MutedBoard;
+import org.theoliverlear.model.sudoku.SudokuGenerator;
 
 import static org.junit.jupiter.api.Assertions.*;
 

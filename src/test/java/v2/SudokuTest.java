@@ -2,8 +2,8 @@ package v2;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.theoliverlear.model.Board;
-import org.theoliverlear.model.Sudoku;
+import org.theoliverlear.model.sudoku.Board;
+import org.theoliverlear.model.sudoku.Sudoku;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
