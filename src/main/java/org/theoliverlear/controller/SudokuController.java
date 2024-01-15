@@ -6,18 +6,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.theoliverlear.entity.Board;
+import org.theoliverlear.entity.Timer;
 import org.theoliverlear.model.sudoku.BoardIndex;
 import org.theoliverlear.model.sudoku.Difficulty;
 import org.theoliverlear.entity.MutedBoard;
 import org.theoliverlear.service.SudokuService;
-
 import java.util.ArrayList;
-
 
 @Controller
 public class SudokuController {
+    //=============================-Variables-================================
     @Autowired
     SudokuService sudokuService;
     Difficulty currentDifficulty = Difficulty.BEGINNER;
@@ -45,6 +46,7 @@ public class SudokuController {
                                              .getSudokuGenerator()
                                              .getMutedBoardFromBoard(mutedIndices);
         this.sudokuService.getSudoku().setBoard(mutedBoardFromBoard);
+        this.sudokuService.getSudoku().getBoard().setTimer(new Timer());
         this.sudokuService.getSudoku().getBoard().printBoard();
         //--------------------------Render-Board------------------------------
         this.sudokuService.renderBoardValues(model);
@@ -59,7 +61,6 @@ public class SudokuController {
                        Model model) {
         this.sudokuService.styleMutedIndices(model);
         this.sudokuService.renderBoardValues(model);
-
         System.out.println("Spot: " + spot + " Value: " + value);
         int[] spotSplit = this.sudokuService.getRowColFromSpot(spot);
         int row = spotSplit[0];
@@ -156,5 +157,12 @@ public class SudokuController {
         // Return the difficulty level and an OK status to indicate that the
         // method was fully successful.
         return new ResponseEntity<>("Difficulty: " + difficulty, HttpStatus.OK);
+    }
+    //--------------------------Get-Time-Elapsed------------------------------
+    @RequestMapping("/time")
+    public ResponseEntity<String> setTimeElapsed(@RequestBody String time) {
+        Timer timer = new Timer(time);
+        this.sudokuService.getSudoku().getBoard().setTimer(timer);
+        return new ResponseEntity<>("Time: " + time, HttpStatus.OK);
     }
 }
