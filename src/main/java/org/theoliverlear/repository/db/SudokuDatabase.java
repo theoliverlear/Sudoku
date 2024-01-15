@@ -1,4 +1,4 @@
-package org.theoliverlear.repository;
+package org.theoliverlear.repository.db;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -7,14 +7,15 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-@Repository
-public class SudokuRepository {
+//@Repository
+@Deprecated
+public class SudokuDatabase {
     //============================-Variables-=================================
-    @Autowired
+//    @Autowired
     DataSource dataSource;
     Connection connection;
     //===========================-Constructors-===============================
-    public SudokuRepository() {
+    public SudokuDatabase() {
         try {
             this.connection = dataSource.getConnection();
         } catch (SQLException ex) {
