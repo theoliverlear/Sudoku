@@ -1,9 +1,12 @@
 //==================================-Login-===================================
+
+//---------------------------------Login-Popup--------------------------------
 let loginButton = document.getElementById('login-popup-button');
 let loginPopup = document.getElementById('login-section');
 let loginCloseButton = document.getElementById('close-login-img');
 function popupLogin() {
     loginPopup.style.display = "block";
+    closeSignup();
 }
 function closeLogin() {
     loginPopup.style.display = "none";
@@ -14,44 +17,48 @@ loginButton.addEventListener("click", popupLogin);
 loginCloseButton.addEventListener("click", closeLogin);
 //----------------------Highlight-Login-Close-Button--------------------------
 function makeLoginCloseImgRed() {
-    loginCloseButton.src = "../static/images/close_tab_red_x.svg";
+    loginCloseButton.src = "../images/close_tab_red_x.svg";
 }
 function makeLoginCloseImgBlack() {
-    loginCloseButton.src = "../static/images/close_tab_black_x.svg";
+    loginCloseButton.src = "../images/close_tab_black_x.svg";
 }
 loginCloseButton.addEventListener("mouseover", makeLoginCloseImgRed);
 loginCloseButton.addEventListener("mouseout", makeLoginCloseImgBlack);
-
 //------------------------------Submit-Login----------------------------------
-let loginSuccess = false; // SHINING VARIABLE
 let loginSubmitButton = document.getElementById('login-button-div');
-let username = document.getElementById('login-username-input');
-let password = document.getElementById('login-password-input');
+let loginUsername = document.getElementById('login-username-input');
+let loginPassword = document.getElementById('login-password-input');
 function submitLogin() {
-    let usernameText = username.value;
-    let passwordText = password.value;
-    let xmlRequestString = getLoginRequestXml(usernameText, passwordText);
+    let usernameText = loginUsername.value;
+    let passwordText = loginPassword.value;
+    let jsonRequestString = getCredentialRequestJson(usernameText, passwordText);
     let request = new XMLHttpRequest();
     request.open("POST", `/user/login`);
-    request.setRequestHeader("Content-Type", "text/xml");
+    request.setRequestHeader("Content-Type", "application/json");
+    // request.setRequestHeader("Content-Type", "text/xml");
     request.onload = function () {
-        loginSuccess = request.responseText;
-        if (loginSuccess === "true") {
+        let loginSuccess = request.responseText;
+        if (loginSuccess === "authenticated") {
             hideInvalidLoginText();
             closeLogin();
             clearInputFields();
-            loginButton.style.display = "none";
+            showLoggedInButtons();
+
         } else {
             revealInvalidLoginText();
         }
     }
-    request.send(xmlRequestString);
+    request.send(jsonRequestString);
 }
 loginSubmitButton.addEventListener("click", submitLogin);
 //----------------------------Clear-Input-Fields------------------------------
 function clearInputFields() {
-    username.value = "";
-    password.value = "";
+    loginUsername.value = "";
+    loginPassword.value = "";
+    
+    signupUsername.value = "";
+    signupPassword.value = "";
+    signupPasswordConfirm.value = "";
 }
 //----------------------------Invalid-Login-Popup-----------------------------
 let invalidLoginPopup = document.getElementById('invalid-login-div');
@@ -64,17 +71,174 @@ function hideInvalidLoginText() {
     loginSection.style.height = "22vh"
     invalidLoginPopup.style.display = "none";
 }
-
-//---------------------------Get-Login-Request-XML----------------------------
-function getLoginRequestXml(username, password) {
+//------------------------------Get-Request-XML-------------------------------
+function getCredentialRequestXml(username, password) {
     let xmlRequestString = `
-    <LoginRequest>
+    <CredentialRequest>
         <username>${username}</username>
         <password>${password}</password>
-    </LoginRequest>
+    </CredentialRequest>
 `;
     return xmlRequestString;
 }
+//-------------------------------Get-Request-JSON-----------------------------
+function getCredentialRequestJson(username, password) {
+    let jsonRequestString = `
+    {
+        "username": "${username}",
+        "password": "${password}"
+    }
+`;
+    return jsonRequestString;
+}
+//==================================-Signup-==================================
+
+//--------------------------------Signup-Popup--------------------------------
+let signupButton = document.getElementById('signup-popup-button');
+let signupPopup = document.getElementById('signup-section');
+let signupCloseButton = document.getElementById('close-signup-img');
+function popupSignup() {
+    signupPopup.style.display = "block";
+    closeLogin();
+}
+function closeSignup() {
+    signupPopup.style.display = "none";
+    hideInvalidSignupText();
+    clearInputFields();
+}
+signupButton.addEventListener("click", popupSignup);
+signupCloseButton.addEventListener("click", closeSignup);
+//-----------------------Highlight-Signup-Close-Button------------------------
+function makeSignupCloseImgRed() {
+    signupCloseButton.src = "../images/close_tab_red_x.svg";
+}
+function makeSignupCloseImgBlack() {
+    signupCloseButton.src = "../images/close_tab_black_x.svg";
+}
+signupCloseButton.addEventListener("mouseover", makeSignupCloseImgRed);
+signupCloseButton.addEventListener("mouseout", makeSignupCloseImgBlack);
+//------------------------------Submit-Signup---------------------------------
+let signupSuccess = false; // SHINING VARIABLE
+let signupSubmitButton = document.getElementById('signup-button-div');
+let signupUsername = document.getElementById('signup-username-input');
+let signupPassword = document.getElementById('signup-password-input');
+let signupPasswordConfirm = document.getElementById('signup-confirm-password-input');
+
+function submitSignup() {
+    if (!signupPasswordMatches()) {
+        revealPasswordsMatchText();
+        return;
+    } else {
+        hidePasswordsMatchText();
+    }
+    let usernameText = signupUsername.value;
+    let passwordText = signupPassword.value;
+    let jsonRequestString = getCredentialRequestJson(usernameText, passwordText);
+    let request = new XMLHttpRequest();
+    request.open("POST", `/user/signup`);
+    request.setRequestHeader("Content-Type", "application/json");
+    request.onload = function () {
+        signupSuccess = request.responseText;
+        if (signupSuccess === "success") {
+            hideInvalidSignupText();
+            closeSignup();
+            clearInputFields();
+            showLoggedInButtons();
+        } else {
+            revealInvalidSignupText();
+        }
+    }
+    // request.send(xmlRequestString);
+    request.send(jsonRequestString);
+}
+signupSubmitButton.addEventListener("click", submitSignup);
+//-------------------------Signup-Password-Matches----------------------------
+function signupPasswordMatches() {
+    let passwordText = signupPassword.value;
+    let passwordConfirmText = signupPasswordConfirm.value;
+    return passwordText === passwordConfirmText;
+}
+//---------------------------Invalid-Signup-Popup-----------------------------
+const DEFAULT_INVALID_SIGNUP_TEXT = "Invalid username or password.";
+const PASSWORDS_DONT_MATCH_TEXT = "Passwords do not match.";
+let invalidSignupPopup = document.getElementById('invalid-signup-div');
+let signupSection = document.getElementById('signup-section');
+function revealInvalidSignupText() {
+    signupSection.style.height = "27vh"
+    invalidSignupPopup.style.display = "flex";
+}
+function hideInvalidSignupText() {
+    signupSection.style.height = "24vh"
+    invalidSignupPopup.style.display = "none";
+}
+//--------------------------Passwords-Match-Popup-----------------------------
+function revealPasswordsMatchText() {
+    invalidSignupPopup.children[0].innerText = PASSWORDS_DONT_MATCH_TEXT;
+    signupSection.style.height = "27vh"
+    invalidSignupPopup.style.display = "flex";
+}
+function hidePasswordsMatchText() {
+    invalidSignupPopup.children[0].innerText = DEFAULT_INVALID_SIGNUP_TEXT;
+    signupSection.style.height = "24vh"
+    invalidSignupPopup.style.display = "none";
+}
+//=============================-Logged-In-Buttons-============================
+
+//---------------------------Swap-Login-Signup-Buttons------------------------
+let loginSignupButtons = document.getElementById('login-signup-button-section');
+let loggedInButtons = document.getElementById('logged-in-button-section');
+function showLoginSignupButtons() {
+    loginSignupButtons.style.display = "flex";
+    loggedInButtons.style.display = "none";
+}
+function showLoggedInButtons() {
+    loginSignupButtons.style.display = "none";
+    loggedInButtons.style.display = "flex";
+    loadAccountButtonText();
+}
+//------------------------------Is-Logged-In----------------------------------
+function isLoggedIn() {
+    let request = new XMLHttpRequest();
+    let isLoggedIn = false;
+    request.open("POST", "/user/logged-in");
+    request.onload = function () {
+        let response = request.responseText;
+        if (response === "true") {
+            isLoggedIn = true;
+        } else {
+            isLoggedIn = false;
+        }
+    }
+    request.send();
+    return isLoggedIn;
+}
+//-------------------------------Logout-Button--------------------------------
+let logoutButton = document.getElementById('logout-button-div');
+function logout() {
+    let request = new XMLHttpRequest();
+    request.open("POST", "/user/logout");
+    showLoginSignupButtons();
+}
+logoutButton.addEventListener("click", logout);
+//-------------------------Load-Account-Button-Text---------------------------
+let accountButton = document.getElementById('account-button-div');
+function loadAccountButtonText() {
+    let request = new XMLHttpRequest();
+    request.open("POST", "/user/refresh/account-button");
+    request.onload = function () {
+        let response = request.responseText;
+        accountButton.outerHTML = response;
+    }
+    request.send();
+}
+//--------------------------------Save-Board----------------------------------
+let saveGameButton = document.getElementById('save-board-button-div');
+function saveBoard() {
+    let request = new XMLHttpRequest();
+    request.open("POST", "/save");
+    request.send();
+}
+saveGameButton.addEventListener("click", saveBoard);
 //==================================-Timer-===================================
 
 //--------------------------------Time-Counter--------------------------------
@@ -193,7 +357,6 @@ function newGame() {
         attachListeners();
     }
     request.send();
-    
 }
 newGameButton.addEventListener("click", popupDifficultyMenu);
 //---------------------------Track-Mouse-Movements----------------------------
