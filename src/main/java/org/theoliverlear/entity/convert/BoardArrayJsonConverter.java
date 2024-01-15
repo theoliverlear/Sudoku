@@ -17,10 +17,9 @@ public class BoardArrayJsonConverter implements AttributeConverter<int[][], Stri
     // versa. They are implemented using the Jackson ObjectMapper class which
     // is a typical JSON parser and converter.
     ObjectMapper objectMapper = new ObjectMapper();
-
     //============================-Methods-===================================
 
-    //----------------------Covert-Board-To-JSON------------------------------
+    //------------------------Covert-Board-To-JSON----------------------------
     @Override
     public String convertToDatabaseColumn(int[][] board) {
         try {
