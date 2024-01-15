@@ -27,18 +27,19 @@
             <div class="button" id="login-popup-button">
                 <h2 class="button-text">Login</h2>
             </div>
-            <div class="button">
+            <div class="button" id="signup-popup-button">
                 <h2 class="button-text">Sign-up</h2>
             </div>
         </section>
         <section id="logged-in-button-section">
-            <div class="button">
-                <h2 class="button-text">Account Name</h2>
+            <div class="button" id="account-button-div"
+                 th:replace="account-button-patch :: account-button-patch">
+
             </div>
-            <div class="button">
+            <div class="button" id="save-board-button-div">
                 <h2 class="button-text">Save Board</h2>
             </div>
-            <div class="button">
+            <div class="button" id="logout-button-div">
                 <h2 class="button-text">Logout</h2>
             </div>
         </section>
@@ -96,6 +97,7 @@
                      th:src="@{/images/close_tab_black_x.svg}"
                      alt="close tab">
             </div>
+            <!----------------------Login-Input------------------------------>
             <div id="login-input-div">
                 <input id="login-username-input" class="login-signup-input"
                        type="text" placeholder="  Username">
@@ -109,6 +111,35 @@
             <!---------------------Login-Button----------------------------->
             <div id="login-button-div" class="button">
                 <h2 id="login-button" class="button-text">Login</h2>
+            </div>
+        </div>
+    </section>
+    <!-------------------------------Signup---------------------------------->
+    <section id="signup-section">
+        <div id="signup-container">
+            <div id="signup-title-text-container">
+                <h2 id="signup-title-text">Sudoku Account</h2>
+                <img id="close-signup-img"
+                     src="../static/images/close_tab_black_x.svg"
+                     th:src="@{/images/close_tab_black_x.svg}"
+                     alt="close tab">
+            </div>
+            <!---------------------Signup-Input------------------------------->
+            <div id="signup-input-div">
+                <input id="signup-username-input" class="login-signup-input"
+                       type="text" placeholder="  Username">
+                <input id="signup-password-input" class="login-signup-input"
+                          type="password" placeholder="  Password">
+                <input id="signup-confirm-password-input" class="login-signup-input"
+                          type="password" placeholder=" Confirm Password">
+            </div>
+            <!---------------------Invalid-Signup---------------------------->
+            <div id="invalid-signup-div">
+                <h4 id="invalid-signup-text">Invalid username or password.</h4>
+            </div>
+            <!---------------------Signup-Button----------------------------->
+            <div id="signup-button-div" class="button">
+                <h2 id="signup-button" class="button-text">Sign-up</h2>
             </div>
         </div>
     </section>
