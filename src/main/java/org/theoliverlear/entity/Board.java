@@ -2,6 +2,7 @@ package org.theoliverlear.entity;
 
 import jakarta.persistence.*;
 import org.theoliverlear.entity.convert.BoardArrayJsonConverter;
+import org.theoliverlear.model.sudoku.Difficulty;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -9,16 +10,36 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 @Entity
+@DiscriminatorColumn(name = "dtype")
+@DiscriminatorValue("Board")
+@Table(name = "boards")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Board implements Serializable {
     //=============================-Variables-================================
     @Serial
     private static final long serialVersionUID = 81L;
+    //------------------------------Board-ID----------------------------------
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
+    //-----------------------------Difficulty---------------------------------
+    @Column(name = "difficulty")
+    private String difficulty;
+    //--------------------------------Timer-----------------------------------
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "timer")
+    private Timer timer;
+    //------------------------------2D-Board----------------------------------
+    @Column(name = "board_state")
     @Convert(converter = BoardArrayJsonConverter.class)
     int[][] board;
+    //----------------------------Muted-Indices-------------------------------
+
+    //------------------------------Lengths-----------------------------------
+    @Transient
     final int colLength;
+    @Transient
     final int rowLength;
     //===========================-Constructors-===============================
     public Board() {
@@ -28,6 +49,19 @@ public class Board implements Serializable {
         this.resetBoard();
     }
     public Board(int[][] board) {
+        this.board = board;
+        this.rowLength = this.board.length;
+        this.colLength = this.board[0].length;
+    }
+    public Board(Difficulty difficulty) {
+        this.difficulty = difficulty.getName();
+        this.board = new int[9][9];
+        this.rowLength = this.board.length;
+        this.colLength = this.board[0].length;
+        this.resetBoard();
+    }
+    public Board(Difficulty difficulty, int[][] board) {
+        this.difficulty = difficulty.getName();
         this.board = board;
         this.rowLength = this.board.length;
         this.colLength = this.board[0].length;
@@ -293,9 +327,24 @@ public class Board implements Serializable {
     public Long getId() {
         return this.id;
     }
+    public String getDifficulty() {
+        return this.difficulty;
+    }
+    public Timer getTimer() {
+        return this.timer;
+    }
     //=============================-Setters-==================================
 
     public void setBoard(int[][] board) {
         this.board = board;
+    }
+    public void setId(Long id) {
+        this.id = id;
+    }
+    public void setDifficulty(String difficulty) {
+        this.difficulty = difficulty;
+    }
+    public void setTimer(Timer timer) {
+        this.timer = timer;
     }
 }

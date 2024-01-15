@@ -8,6 +8,9 @@ import org.theoliverlear.model.sudoku.BoardIndex;
 import java.util.ArrayList;
 
 @Entity
+@DiscriminatorValue("MutedBoard")
+@Table(name = "boards")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class MutedBoard extends Board {
     //=============================-Variables-================================
     @Id
@@ -16,6 +19,7 @@ public class MutedBoard extends Board {
     public MutedBoard() {
         super();
     }
+    @Column(name = "muted_indices")
     @Convert(converter = BoardIndexArrayListConverter.class)
     ArrayList<BoardIndex> mutedIndices = new ArrayList<>();
     //===========================-Constructors-===============================
