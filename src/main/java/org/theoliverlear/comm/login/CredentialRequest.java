@@ -1,10 +1,10 @@
 package org.theoliverlear.comm.login;
 
-public class LoginRequest {
+public class CredentialRequest {
     private String username;
     private String password;
     //============================-Constructors-==============================
-    public LoginRequest(String username, String password) {
+    public CredentialRequest(String username, String password) {
         this.username = username;
         this.password = password;
     }
