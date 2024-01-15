@@ -16,6 +16,12 @@ public class Timer {
         this.seconds = 0;
         this.minutes = 0;
     }
+    public Timer(String time) {
+        this.time = time;
+        String[] timeArray = time.split(":");
+        this.minutes = Integer.parseInt(timeArray[0]);
+        this.seconds = Integer.parseInt(timeArray[1]);
+    }
     public Timer(int seconds, int minutes) {
         this.seconds = seconds;
         this.minutes = minutes;
