@@ -3,6 +3,7 @@ package org.theoliverlear.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.theoliverlear.entity.Board;
 import org.theoliverlear.entity.User;
 import org.theoliverlear.repository.BoardRepository;
@@ -27,14 +28,27 @@ public class UserService {
     //=============================-Methods-==================================
 
     //-----------------------------Save-User----------------------------------
+    @Transactional
     public void saveUser(User user) {
+        this.userRepository.save(user);
+    }
+    //---------------------------Save-New-User--------------------------------
+    public void saveNewUser(User user) {
         String encodedPassword = this.passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
         this.userRepository.save(user);
     }
     //-----------------------------Save-Board---------------------------------
+    @Transactional
     public void saveBoard(Board board) {
-        this.boardRepository.save(board);
+        this.boardRepository.saveAndFlush(board);
+    }
+    //------------------------------Load-Board--------------------------------
+    public Board loadBoard(Long boardId) {
+        return this.boardRepository.getBoardById(boardId);
+    }
+    public Long getBoardIdByUsername(String username) {
+        return this.userRepository.getBoardIdByUsername(username);
     }
     //---------------------------Contains-User--------------------------------
     public boolean containsUser(String username) {
@@ -43,6 +57,7 @@ public class UserService {
     //--------------------------Password-Match--------------------------------
     public boolean passwordMatch(String password, String encodedPassword) {
         boolean passwordsMatch = this.passwordEncoder.matches(password, encodedPassword);
+        System.out.println("Password match: " + passwordsMatch);
         return passwordsMatch;
     }
     //-----------------------------Get-User-----------------------------------
