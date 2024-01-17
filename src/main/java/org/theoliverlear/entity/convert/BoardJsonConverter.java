@@ -1,5 +1,6 @@
 package org.theoliverlear.entity.convert;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
@@ -26,7 +27,7 @@ public class BoardJsonConverter implements AttributeConverter<Board, String> {
         try {
             // Turn the board into a JSON string.
             return objectMapper.writeValueAsString(board);
-        } catch (Exception ex) {
+        } catch (JsonProcessingException ex) {
             // If there is an error in the creation of a JSON, an exception is
             // thrown.
             final String EXCEPTION_MESSAGE = "Error converting Board to JSON.";
@@ -39,7 +40,7 @@ public class BoardJsonConverter implements AttributeConverter<Board, String> {
         try {
             // Turn the JSON string into a Board object and return it.
             return objectMapper.readValue(board, Board.class);
-        } catch (Exception ex) {
+        } catch (JsonProcessingException ex) {
             // If there is an error in the creation of a board from a JSON
             // string, an exception is thrown.
             final String EXCEPTION_MESSAGE = "Error converting JSON to Board.";
