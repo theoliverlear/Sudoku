@@ -43,7 +43,7 @@ function submitLogin() {
             closeLogin();
             clearInputFields();
             showLoggedInButtons();
-
+            loadBoard();
         } else {
             revealInvalidLoginText();
         }
@@ -87,6 +87,14 @@ function getCredentialRequestJson(username, password) {
     {
         "username": "${username}",
         "password": "${password}"
+    }
+`;
+    return jsonRequestString;
+}
+function getTimeRequestJson(timer) {
+    let jsonRequestString = `
+    {
+        "timer": "${timer}"
     }
 `;
     return jsonRequestString;
@@ -234,8 +242,9 @@ function loadAccountButtonText() {
 //--------------------------------Save-Board----------------------------------
 let saveGameButton = document.getElementById('save-board-button-div');
 function saveBoard() {
+    submitTime();
     let request = new XMLHttpRequest();
-    request.open("POST", "/save");
+    request.open("POST", "/user/save");
     request.send();
 }
 saveGameButton.addEventListener("click", saveBoard);
@@ -258,7 +267,7 @@ let inProgress = false; // SHINING VARIABLE
  * Represents a time string.
  * @type {string}
  */
-let timeString = "";
+let timeString = "00:00";
 /**
  * Start counting time in seconds and minutes.
  * @returns {void}
@@ -302,6 +311,14 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 timeCounter();
+//-------------------------------Submit-Time----------------------------------
+function submitTime() {
+    let request = new XMLHttpRequest();
+    request.open("POST", `/time`);
+    request.setRequestHeader("Content-Type", "application/json");
+    let jsonTimeRequestString = getTimeRequestJson(timeString);
+    request.send(jsonTimeRequestString);
+}
 //===============================-Difficulty-=================================
 let difficultySection = document.getElementById('difficulty-section');
 let difficultyButtons = document.getElementsByClassName('difficulty-option');
@@ -359,6 +376,46 @@ function newGame() {
     request.send();
 }
 newGameButton.addEventListener("click", popupDifficultyMenu);
+//--------------------------------Load-Board----------------------------------
+async function loadBoard() {
+    let loadedBoardExists = await boardExists();
+    if (!loadedBoardExists) {
+        console.log("No board to load.")
+        return;
+    }
+    let request = new XMLHttpRequest();
+    request.open("POST", "/user/load");
+    request.onload = function () {
+        let fragResponse = request.responseText;
+        let boardDiv = document.getElementById('game-section');
+        boardDiv.outerHTML = fragResponse;
+        attachListeners();
+    }
+    request.send();
+}
+//-------------------------------Board-Exists---------------------------------
+function boardExists() {
+    return new Promise((resolve, reject) => {
+        let request = new XMLHttpRequest();
+        request.open("POST", "/user/board-exists");
+        request.onload = function () {
+            let response = request.responseText.trim();
+            console.log(`boardExists: ${response}`);
+            if (response === "true") {
+                console.log("Board exists.");
+                resolve(true);
+            } else {
+                console.log("Board does not exist.");
+                resolve(false);
+            }
+        }
+        request.onerror = function () {
+            reject("Error getting boardExists boolean.");
+        }
+        request.send();
+        return boardExists;
+    });
+}
 //---------------------------Track-Mouse-Movements----------------------------
 let mouseCords = {x: 0, y: 0};
 document.addEventListener("mousemove", monitorMouseCords);
@@ -452,6 +509,7 @@ function makeMove(spotChoice, spotNumberChoice) {
         attachListeners();
     }
     request.send();
+    submitTime();
 }
 //==============================-Check-Board-=================================
 /**
