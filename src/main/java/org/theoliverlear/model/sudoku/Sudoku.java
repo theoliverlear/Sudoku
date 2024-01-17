@@ -1,7 +1,6 @@
 package org.theoliverlear.model.sudoku;
 
 import org.theoliverlear.entity.Board;
-import org.theoliverlear.entity.MutedBoard;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -14,8 +13,8 @@ public class Sudoku {
         this.board = new Board();
         this.inProgress = true;
     }
-    public Sudoku(MutedBoard mutedBoard) {
-        this.board = mutedBoard;
+    public Sudoku(Board presetBoard) {
+        this.board = presetBoard;
         this.inProgress = true;
     }
     //==============================-Methods-=================================
