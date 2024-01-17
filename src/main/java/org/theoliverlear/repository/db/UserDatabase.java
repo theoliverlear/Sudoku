@@ -2,11 +2,9 @@ package org.theoliverlear.repository.db;
 
 
 import org.intellij.lang.annotations.Language;
-import org.springframework.stereotype.Repository;
 import org.theoliverlear.entity.Board;
 import org.theoliverlear.entity.User;
-import org.theoliverlear.model.sudoku.BoardIndex;
-
+import org.theoliverlear.entity.BoardIndex;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
