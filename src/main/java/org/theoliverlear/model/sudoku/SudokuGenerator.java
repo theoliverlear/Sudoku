@@ -1,8 +1,7 @@
 package org.theoliverlear.model.sudoku;
 
 import org.theoliverlear.entity.Board;
-import org.theoliverlear.entity.MutedBoard;
-
+import org.theoliverlear.entity.BoardIndex;
 import java.time.Instant;
 import java.util.*;
 
@@ -19,8 +18,9 @@ public class SudokuGenerator {
         this.colLength = this.sudoku.getBoard().getColLength();
         this.numsTriedAtBoard = new HashMap<>();
     }
-    public SudokuGenerator(MutedBoard mutedBoard) {
-        this.sudoku = new Sudoku(mutedBoard);
+    public SudokuGenerator(ArrayList<BoardIndex> mutedIndices) {
+        this.sudoku = new Sudoku();
+        this.sudoku.getBoard().setMutedIndices(mutedIndices);
         this.rowLength = this.sudoku.getBoard().getRowLength();
         this.colLength = this.sudoku.getBoard().getColLength();
         this.numsTriedAtBoard = new HashMap<>();
@@ -347,9 +347,24 @@ public class SudokuGenerator {
                 this.columnContains(columnIndex, value) ||
                 this.squareContains(this.sudoku.getBoard().fetchSquare(rowIndex + 1, columnIndex + 1), value);
     }
-    //--------------------Get-Muted-Board-From-Board--------------------------
-    public MutedBoard getMutedBoardFromBoard(int numMuted) {
+    //------------------Get-Starter-Board-From-Board--------------------------
+    public Board getStarterBoardFromBoard(int numMuted) {
         Board startingBoard = new Board();
+        ArrayList<BoardIndex> mutedIndices = this.getMutedIndices(numMuted);
+        for (BoardIndex index : mutedIndices) {
+            int rowIndex = index.getRowIndex();
+            int colIndex = index.getColumnIndex();
+            int row = rowIndex + 1;
+            int column = colIndex + 1;
+            int value = this.sudoku.getBoard().getNumber(row, column);
+            startingBoard.placeNumber(row, column, value);
+        }
+        startingBoard.setMutedIndices(mutedIndices);
+        System.out.println("Muted indices in generator starter method: " + mutedIndices);
+        return startingBoard;
+    }
+    //------------------------Get-Muted-Indices-------------------------------
+    public ArrayList<BoardIndex> getMutedIndices(int numMuted) {
         ArrayList<BoardIndex> mutedIndices = new ArrayList<>();
         for (int i = 0; i < numMuted; i++) {
             BoardIndex randIndex;
@@ -360,14 +375,9 @@ public class SudokuGenerator {
                     break;
                 }
             }
-            int rowIndex = randIndex.getRowIndex();
-            int colIndex = randIndex.getColumnIndex();
-            int row = rowIndex + 1;
-            int column = colIndex + 1;
-            int value = this.sudoku.getBoard().getNumber(row, column);
-            startingBoard.placeNumber(row, column, value);
         }
-        return new MutedBoard(startingBoard);
+        System.out.println("Muted Indices: " + mutedIndices);
+        return mutedIndices;
     }
     //------------------------Generate-Valid-Board----------------------------
     public void generateValidMutedBoard(int numMuted) {
