@@ -1,7 +1,6 @@
 package org.theoliverlear.entity;
 
 import jakarta.persistence.*;
-import org.theoliverlear.entity.convert.BoardJsonConverter;
 
 @Entity
 @Table(name = "users")
@@ -15,7 +14,7 @@ public class User {
     @Column(name = "password", nullable = false)
     private String password;
 //    @Convert(converter = BoardJsonConverter.class)
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "current_board_id", referencedColumnName = "id")
     private Board currentBoard;
     //============================-Constructors-==============================
