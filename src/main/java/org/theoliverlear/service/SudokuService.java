@@ -2,12 +2,11 @@ package org.theoliverlear.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
-import org.theoliverlear.entity.MutedBoard;
+import org.theoliverlear.entity.Board;
+import org.theoliverlear.entity.BoardIndex;
 import org.theoliverlear.model.sudoku.*;
-
 import java.util.ArrayList;
 import java.util.Arrays;
-
 /**
  * This class represents a Sudoku service that generates and handles Sudoku puzzles.
  */
@@ -45,10 +44,9 @@ public class SudokuService {
     public SudokuService() {
         this.sudokuGenerator.generateBoardRandomly();
         this.sudokuGenerator.getSudoku().getBoard().printBoard();
-        MutedBoard mutedBoardFromBoard = this.sudokuGenerator.getMutedBoardFromBoard(5);
-        this.sudoku = new Sudoku(mutedBoardFromBoard);
+        Board board = this.sudokuGenerator.getStarterBoardFromBoard(5);
+        this.sudoku = new Sudoku(board);
     }
-
     /**
      * Constructs a SudokuService object with the given difficulty level.
      * @param difficulty the difficulty level of the Sudoku game
@@ -61,13 +59,12 @@ public class SudokuService {
         final int mutedIndices = difficulty.getMutedIndices();
         this.sudokuGenerator.generateBoardRandomly();
         this.sudokuGenerator.getSudoku().getBoard().printBoard();
-        MutedBoard mutedBoardFromBoard = this.sudokuGenerator.getMutedBoardFromBoard(mutedIndices);
-        this.sudoku = new Sudoku(mutedBoardFromBoard);
+        Board board = this.sudokuGenerator.getStarterBoardFromBoard(mutedIndices);
+        this.sudoku = new Sudoku(board);
     }
     //=============================-Methods-==================================
 
     //---------------------------Number-To-Word-------------------------------
-
     /**
      * Converts a given integer to its corresponding word representation.
      * @param num the number to convert
@@ -140,19 +137,17 @@ public class SudokuService {
     //--------------------------Style-Muted-Indices---------------------------
     public void styleMutedIndices(Model model) {
         System.out.println("Styling muted indices");
-        if (this.getSudoku().getBoard() instanceof MutedBoard mutedBoard) {
-            ArrayList<BoardIndex> mutedIndices = mutedBoard.getMutedIndices();
-            for (BoardIndex index : mutedIndices) {
-                //--------------Row-Column-Equivalent-------------------------
-                int row = index.getRowIndex() + 1;
-                int column = index.getColumnIndex() + 1;
-                //--------------Get-Id-For-Spot-Style-------------------------
-                String spotLeftNum = this.numToWord(row);
-                String spotRightNum = this.numToWord(column);
-                String spotModelNum = spotLeftNum + "_" + spotRightNum + "_style";
-                //-----------------Update-Page--------------------------------
-                model.addAttribute(spotModelNum, MUTED_INDEX_STYLE);
-            }
+        ArrayList<BoardIndex> mutedIndices = this.sudoku.getBoard().getMutedIndices();
+        for (BoardIndex index : mutedIndices) {
+            //-----------------Row-Column-Equivalent--------------------------
+            int row = index.getRowIndex() + 1;
+            int column = index.getColumnIndex() + 1;
+            //-----------------Get-Id-For-Spot-Style--------------------------
+            String spotLeftNum = this.numToWord(row);
+            String spotRightNum = this.numToWord(column);
+            String spotModelNum = spotLeftNum + "_" + spotRightNum + "_style";
+            //--------------------Update-Page---------------------------------
+            model.addAttribute(spotModelNum, MUTED_INDEX_STYLE);
         }
     }
     //--------------------------Render-Board-Values---------------------------
@@ -201,8 +196,8 @@ public class SudokuService {
                 // value will violate any rules without changing the current
                 // board.
                 SudokuGenerator sudokuGenerator = new SudokuGenerator();
-                int[][] currentBoard = this.getSudoku().getBoard().getBoard();
-                sudokuGenerator.getSudoku().getBoard().setBoard(currentBoard);
+                Board currentBoard = this.getSudoku().getBoard();
+                sudokuGenerator.getSudoku().setBoard(currentBoard);
                 sudokuGenerator.getSudoku().getBoard().placeNumber(row, column, 0);
                 boolean isViolating = this.isViolating(sudokuGenerator,
                                                        rowIndex, colIndex,
