@@ -1,4 +1,4 @@
-package org.theoliverlear.model.sudoku;
+package org.theoliverlear.entity;
 
 import java.util.Arrays;
 
@@ -15,7 +15,10 @@ public class BoardIndex {
         this.rowIndex = index[0];
         this.columnIndex = index[1];
     }
-
+    public BoardIndex() {
+        this.rowIndex = 0;
+        this.columnIndex = 0;
+    }
     //=============================-Overrides-================================
 
     //------------------------------To-String---------------------------------
