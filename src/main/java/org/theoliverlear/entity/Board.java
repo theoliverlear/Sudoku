@@ -2,8 +2,8 @@ package org.theoliverlear.entity;
 
 import jakarta.persistence.*;
 import org.theoliverlear.entity.convert.BoardArrayJsonConverter;
+import org.theoliverlear.entity.convert.BoardIndexArrayListConverter;
 import org.theoliverlear.model.sudoku.Difficulty;
-
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -27,15 +27,16 @@ public class Board implements Serializable {
     @Column(name = "difficulty")
     private String difficulty;
     //--------------------------------Timer-----------------------------------
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "timer")
-    private Timer timer;
+    @Column(name = "timer")
+    String timer;
     //------------------------------2D-Board----------------------------------
     @Column(name = "board_state")
     @Convert(converter = BoardArrayJsonConverter.class)
     int[][] board;
     //----------------------------Muted-Indices-------------------------------
-
+    @Column(name = "muted_indices", columnDefinition = "TEXT")
+    @Convert(converter = BoardIndexArrayListConverter.class)
+    ArrayList<BoardIndex> mutedIndices;
     //------------------------------Lengths-----------------------------------
     @Transient
     final int colLength;
@@ -43,17 +44,27 @@ public class Board implements Serializable {
     final int rowLength;
     //===========================-Constructors-===============================
     public Board() {
+        this.mutedIndices = new ArrayList<>();
         this.board = new int[9][9];
         this.rowLength = this.board.length;
         this.colLength = this.board[0].length;
         this.resetBoard();
     }
     public Board(int[][] board) {
+        this.mutedIndices = new ArrayList<>();
         this.board = board;
         this.rowLength = this.board.length;
         this.colLength = this.board[0].length;
     }
+    public Board(ArrayList<BoardIndex> mutedIndices, int[][] board) {
+        this.board = board;
+        this.rowLength = this.board.length;
+        this.colLength = this.board[0].length;
+        this.resetBoard();
+        this.mutedIndices = mutedIndices;
+    }
     public Board(Difficulty difficulty) {
+        this.mutedIndices = new ArrayList<>();
         this.difficulty = difficulty.getName();
         this.board = new int[9][9];
         this.rowLength = this.board.length;
@@ -118,6 +129,12 @@ public class Board implements Serializable {
     public void placeNumber(int row, int column, int value) {
         // The numbers being received should be the row and column numbers,
         // not their indexes. They are converted to indexes by decrementing.
+        for (BoardIndex boardIndex : this.mutedIndices) {
+            if (boardIndex.getRowIndex() == row - 1 &&
+                    boardIndex.getColumnIndex() == column - 1) {
+                return;
+            }
+        }
         this.board[--row][--column] = value;
     }
     //--------------------------Is-Complete-Set-------------------------------
@@ -331,10 +348,12 @@ public class Board implements Serializable {
         return this.difficulty;
     }
     public Timer getTimer() {
-        return this.timer;
+        return new Timer(this.timer);
+    }
+    public ArrayList<BoardIndex> getMutedIndices() {
+        return this.mutedIndices;
     }
     //=============================-Setters-==================================
-
     public void setBoard(int[][] board) {
         this.board = board;
     }
@@ -345,6 +364,9 @@ public class Board implements Serializable {
         this.difficulty = difficulty;
     }
     public void setTimer(Timer timer) {
-        this.timer = timer;
+        this.timer = timer.getTime();
+    }
+    public void setMutedIndices(ArrayList<BoardIndex> mutedIndices) {
+        this.mutedIndices = mutedIndices;
     }
 }
