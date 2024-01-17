@@ -8,7 +8,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.theoliverlear.comm.login.CredentialRequest;
+import org.theoliverlear.entity.Board;
 import org.theoliverlear.entity.User;
+import org.theoliverlear.model.sudoku.Sudoku;
 import org.theoliverlear.service.UserService;
 
 @Controller
@@ -51,7 +53,7 @@ public class UserController extends SudokuController {
         } else if (containsUser) {
             return new ResponseEntity<>("user already exists", HttpStatus.BAD_REQUEST);
         }
-        this.userService.saveUser(new User(username, password));
+        this.userService.saveNewUser(new User(username, password));
         this.currentUser = this.userService.getUser(username);
         return new ResponseEntity<>("success", HttpStatus.OK);
     }
@@ -79,5 +81,29 @@ public class UserController extends SudokuController {
         this.userService.saveBoard(this.sudokuService.getSudoku().getBoard());
         return new ResponseEntity<>("success", HttpStatus.OK);
     }
+    @RequestMapping("/board-exists")
+    public ResponseEntity<String> boardExists() {
+        boolean boardExists = this.userService.getUserRepository().boardExistsByUsername(this.currentUser.getUsername());
+        if (boardExists) {
+            System.out.println("Board exists for: " + this.currentUser.getUsername());
+            return new ResponseEntity<>("true", HttpStatus.OK);
+        }
+        System.out.println("Board does not exist for: " + this.currentUser.getUsername());
+        return new ResponseEntity<>("false", HttpStatus.OK);
+    }
+    @RequestMapping("/load")
+    public String load(Model model) {
+        System.out.println("Loading board for: " + this.currentUser.getUsername());
+        Long boardId = this.userService.getBoardIdByUsername(this.currentUser.getUsername());
+        Board savedBoard = this.userService.loadBoard(boardId);
+        System.out.println("--------------------Loaded Board--------------------");
+        savedBoard.printBoard();
 
+        this.sudokuService.setSudoku(new Sudoku(savedBoard));
+
+        this.sudokuService.renderStyle(model);
+        this.sudokuService.renderBoardValues(model);
+        this.sudokuService.styleMutedIndices(model);
+        return "game-board-patch :: game-board-patch";
+    }
 }
