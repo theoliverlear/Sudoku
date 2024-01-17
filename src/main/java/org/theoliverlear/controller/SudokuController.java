@@ -8,11 +8,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.theoliverlear.comm.timer.TimerRequest;
 import org.theoliverlear.entity.Board;
 import org.theoliverlear.entity.Timer;
-import org.theoliverlear.model.sudoku.BoardIndex;
+import org.theoliverlear.entity.BoardIndex;
 import org.theoliverlear.model.sudoku.Difficulty;
-import org.theoliverlear.entity.MutedBoard;
 import org.theoliverlear.service.SudokuService;
 import java.util.ArrayList;
 
@@ -42,10 +42,14 @@ public class SudokuController {
         this.sudokuService.getSudoku().getBoard().resetBoard();
         //-------------------------Build-New-Board----------------------------
         int mutedIndices = this.currentDifficulty.getMutedIndices();
-        MutedBoard mutedBoardFromBoard = this.sudokuService
-                                             .getSudokuGenerator()
-                                             .getMutedBoardFromBoard(mutedIndices);
+        Board mutedBoardFromBoard = this.sudokuService.getSudokuGenerator()
+                                                      .getStarterBoardFromBoard(mutedIndices);
+        mutedBoardFromBoard.setDifficulty(this.currentDifficulty.getName());
+        System.out.println("Muted Indices from generator: " + mutedBoardFromBoard.getMutedIndices());
+        System.out.println("-----------------Muted-Board-From-Board-----------------");
+        mutedBoardFromBoard.printBoard();
         this.sudokuService.getSudoku().setBoard(mutedBoardFromBoard);
+        System.out.println("Muted Indices after being set: " + this.sudokuService.getSudoku().getBoard().getMutedIndices());
         this.sudokuService.getSudoku().getBoard().setTimer(new Timer());
         this.sudokuService.getSudoku().getBoard().printBoard();
         //--------------------------Render-Board------------------------------
@@ -79,10 +83,11 @@ public class SudokuController {
         String spotRightNum = this.sudokuService.numToWord(col);
         String spotModelNum = spotLeftNum + "_" + spotRightNum;
         //--------------------------Is-Spot-Muted-----------------------------
-        // Built muted board and retrieve muted indices.
-        MutedBoard currentBoard = (MutedBoard) this.sudokuService.getSudoku()
-                                                                 .getBoard();
-        ArrayList<BoardIndex> mutedBoardIndices = currentBoard.getMutedIndices();
+        // Determine if indices are muted by retrieving board's array of muted
+        // indices and validating in a loop.
+        ArrayList<BoardIndex> mutedBoardIndices = this.sudokuService.getSudoku()
+                                                                    .getBoard()
+                                                                    .getMutedIndices();
         boolean isMuted = false;
         // If the spot is muted, do not render the number.
         for (BoardIndex index : mutedBoardIndices) {
@@ -111,9 +116,12 @@ public class SudokuController {
         int[] spotSplit = this.sudokuService.getRowColFromSpot(spot);
         int row = spotSplit[0];
         int col = spotSplit[1];
-        // Build muted board and retrieve muted indices.
-        MutedBoard mutedBoard = (MutedBoard) this.sudokuService.getSudoku().getBoard();
-        ArrayList<BoardIndex> mutedBoardIndices = mutedBoard.getMutedIndices();
+        // Determine if indices are muted by retrieving board's array of muted
+        // indices and validating in a loop.
+        ArrayList<BoardIndex> mutedBoardIndices = this.sudokuService.getSudoku()
+                                                                    .getBoard()
+                                                                    .getMutedIndices();
+        System.out.println("Muted indices from muted request: " + mutedBoardIndices);
         // For each muted index, check if the row and column match the spot.
         // If it matches, it is a member of the muted board and is muted. A
         // response of true is returned.
@@ -154,15 +162,16 @@ public class SudokuController {
         Difficulty difficultyLevel = SudokuService.getDifficulty(difficulty);
         // Set the current difficulty to the parsed difficulty.
         this.currentDifficulty = difficultyLevel;
+        this.sudokuService.getSudoku().getBoard().setDifficulty(difficultyLevel.getName());
         // Return the difficulty level and an OK status to indicate that the
         // method was fully successful.
         return new ResponseEntity<>("Difficulty: " + difficulty, HttpStatus.OK);
     }
     //--------------------------Get-Time-Elapsed------------------------------
     @RequestMapping("/time")
-    public ResponseEntity<String> setTimeElapsed(@RequestBody String time) {
-        Timer timer = new Timer(time);
+    public ResponseEntity<String> setTimeElapsed(@RequestBody TimerRequest timerRequest) {
+        Timer timer = new Timer(timerRequest.getTimer());
         this.sudokuService.getSudoku().getBoard().setTimer(timer);
-        return new ResponseEntity<>("Time: " + time, HttpStatus.OK);
+        return new ResponseEntity<>("Time: " + timer.getTime(), HttpStatus.OK);
     }
 }
