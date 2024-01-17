@@ -5,12 +5,11 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
-import org.theoliverlear.model.sudoku.BoardIndex;
-
+import org.theoliverlear.entity.BoardIndex;
 import java.util.ArrayList;
 
-@Converter
-public class BoardIndexArrayListConverter  implements AttributeConverter<ArrayList<BoardIndex>, String> {
+@Converter(autoApply = true)
+public class BoardIndexArrayListConverter implements AttributeConverter<ArrayList<BoardIndex>, String> {
     // This class is used to convert an ArrayList of BoardIndex objects to a
     // JSON string and vice versa. This is used to store the muted indices in
     // the database using entity attribute.
@@ -44,6 +43,9 @@ public class BoardIndexArrayListConverter  implements AttributeConverter<ArrayLi
             // it. The TypeReference class is used to specify the type of the
             // object that is being converted from JSON. This is used instead
             // of the class itself because the class is generic.
+            if (mutedIndices == null) {
+                return new ArrayList<>();
+            }
             return objectMapper.readValue(mutedIndices, new TypeReference<ArrayList<BoardIndex>>() {
             });
         } catch (JsonProcessingException ex) {
