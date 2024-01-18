@@ -252,5 +252,4 @@ public class SudokuService {
     public void setSudoku(Sudoku sudoku) {
         this.sudoku = sudoku;
     }
-
 }
