@@ -347,8 +347,8 @@ public class Board implements Serializable {
     public String getDifficulty() {
         return this.difficulty;
     }
-    public Timer getTimer() {
-        return new Timer(this.timer);
+    public String getTimer() {
+        return this.timer;
     }
     public ArrayList<BoardIndex> getMutedIndices() {
         return this.mutedIndices;
@@ -363,8 +363,8 @@ public class Board implements Serializable {
     public void setDifficulty(String difficulty) {
         this.difficulty = difficulty;
     }
-    public void setTimer(Timer timer) {
-        this.timer = timer.getTime();
+    public void setTimer(String timer) {
+        this.timer = timer;
     }
     public void setMutedIndices(ArrayList<BoardIndex> mutedIndices) {
         this.mutedIndices = mutedIndices;
