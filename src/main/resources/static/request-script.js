@@ -249,8 +249,6 @@ function saveBoard() {
 }
 saveGameButton.addEventListener("click", saveBoard);
 //==================================-Timer-===================================
-
-//--------------------------------Time-Counter--------------------------------
 /**
  * Represents a timer element in the DOM.
  * @type {HTMLElement}
@@ -268,6 +266,31 @@ let inProgress = false; // SHINING VARIABLE
  * @type {string}
  */
 let timeString = "00:00";
+let timeSeconds = 0;
+let timeMinutes = 0;
+let secondsString = "";
+let minutesString = "";
+//------------------------------Load-Time-Values------------------------------
+function loadTimeValues(timeToLoad) {
+    timeString = timeToLoad;
+    timeSeconds = parseInt(timeToLoad.split(":")[1]);
+    timeMinutes = parseInt(timeToLoad.split(":")[0]);
+}
+//-----------------------------Increment-Seconds------------------------------
+function incrementSeconds() {
+    timeSeconds++;
+    if (timeSeconds === 60) {
+        timeSeconds = 0;
+        incrementMinutes();
+    }
+    updateTime();
+}
+//-----------------------------Increment-Minutes------------------------------
+function incrementMinutes() {
+    timeMinutes++;
+    updateTime();
+}
+//--------------------------------Time-Counter--------------------------------
 /**
  * Start counting time in seconds and minutes.
  * @returns {void}
@@ -278,39 +301,33 @@ let timeString = "00:00";
  * @async
  */
 async function timeCounter() {
-    let timeSeconds = 0;
-    let timeMinutes = 0;
-    let secondsString = "";
-    let minutesString = "";
-    
     while (true) {
         if (inProgress) {
-            if (timeSeconds < 10) {
-                secondsString = "0" + timeSeconds;
-            } else {
-                secondsString = timeSeconds;
-            }
-            if (timeMinutes < 10) {
-                minutesString = "0" + timeMinutes;
-            } else {
-                minutesString = timeMinutes;
-            }
-            timeString = minutesString + ":" + secondsString;
-            timer.innerText = timeString;
-            timeSeconds++;
-            if (timeSeconds === 60) {
-                timeSeconds = 0;
-                timeMinutes++;
-            }
+            incrementSeconds();
         }
         await sleep(1000);
     }
 }
+//---------------------------Update-Time-String-------------------------------
+function updateTime() {
+    if (timeSeconds < 10) {
+        secondsString = "0" + timeSeconds;
+    } else {
+        secondsString = timeSeconds;
+    }
+    if (timeMinutes < 10) {
+        minutesString = "0" + timeMinutes;
+    } else {
+        minutesString = timeMinutes;
+    }
+    timeString = minutesString + ":" + secondsString;
+    timer.innerText = timeString;
+}
+timeCounter();
 //--------------------------------Sleep-Wait----------------------------------
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
-timeCounter();
 //-------------------------------Submit-Time----------------------------------
 function submitTime() {
     let request = new XMLHttpRequest();
@@ -318,6 +335,18 @@ function submitTime() {
     request.setRequestHeader("Content-Type", "application/json");
     let jsonTimeRequestString = getTimeRequestJson(timeString);
     request.send(jsonTimeRequestString);
+}
+//--------------------------------Load-Time-----------------------------------
+function loadTime() {
+    console.log("Loading time.");
+    let request = new XMLHttpRequest();
+    request.open("POST", "/user/load/timer");
+    request.onload = function () {
+        let response = request.responseText;
+        timeString = response;
+        loadTimeValues(timeString);
+    }
+    request.send();
 }
 //===============================-Difficulty-=================================
 let difficultySection = document.getElementById('difficulty-section');
@@ -339,10 +368,10 @@ difficultyButtonsArray.forEach(button => {
 
 let difficultyMenuCloseButton = document.getElementById('close-difficulty-img');
 function makeCloseTabImgRed() {
-    difficultyMenuCloseButton.src = "../static/images/close_tab_red_x.svg";
+    difficultyMenuCloseButton.src = "../images/close_tab_red_x.svg";
 }
 function makeCloseTabImgWhite() {
-    difficultyMenuCloseButton.src = "../static/images/close_tab_x.svg";
+    difficultyMenuCloseButton.src = "../images/close_tab_x.svg";
 }
 difficultyMenuCloseButton.addEventListener("mouseover", makeCloseTabImgRed);
 difficultyMenuCloseButton.addEventListener("mouseout", makeCloseTabImgWhite);
@@ -364,6 +393,7 @@ function setDifficulty() {
 let newGameButton = document.getElementById('new-game-div');
 function newGame() {
     timeString = "00:00";
+    loadTimeValues(timeString);
     inProgress = true;
     let request = new XMLHttpRequest();
     request.open("POST", "/new-game");
@@ -392,6 +422,9 @@ async function loadBoard() {
         attachListeners();
     }
     request.send();
+    inProgress = true;
+    console.log("Board timer in progress: " + inProgress);
+    loadTime();
 }
 //-------------------------------Board-Exists---------------------------------
 function boardExists() {
