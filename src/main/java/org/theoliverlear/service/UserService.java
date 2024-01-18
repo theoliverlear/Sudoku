@@ -78,4 +78,7 @@ public class UserService {
     public void setPasswordEncoder(BCryptPasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
     }
+    public String getTimeByBoardId(Long boardId) {
+        return this.boardRepository.getTimeById(boardId);
+    }
 }
