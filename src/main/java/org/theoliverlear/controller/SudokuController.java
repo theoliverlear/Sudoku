@@ -50,7 +50,7 @@ public class SudokuController {
         mutedBoardFromBoard.printBoard();
         this.sudokuService.getSudoku().setBoard(mutedBoardFromBoard);
         System.out.println("Muted Indices after being set: " + this.sudokuService.getSudoku().getBoard().getMutedIndices());
-        this.sudokuService.getSudoku().getBoard().setTimer(new Timer());
+        this.sudokuService.getSudoku().getBoard().setTimer(new Timer().getTime());
         this.sudokuService.getSudoku().getBoard().printBoard();
         //--------------------------Render-Board------------------------------
         this.sudokuService.renderBoardValues(model);
@@ -171,7 +171,7 @@ public class SudokuController {
     @RequestMapping("/time")
     public ResponseEntity<String> setTimeElapsed(@RequestBody TimerRequest timerRequest) {
         Timer timer = new Timer(timerRequest.getTimer());
-        this.sudokuService.getSudoku().getBoard().setTimer(timer);
+        this.sudokuService.getSudoku().getBoard().setTimer(timer.getTime());
         return new ResponseEntity<>("Time: " + timer.getTime(), HttpStatus.OK);
     }
 }
