@@ -77,6 +77,7 @@ public class UserController extends SudokuController {
     }
     @RequestMapping("/save")
     public ResponseEntity<String> save() {
+        this.currentUser.setCurrentBoard(this.sudokuService.getSudoku().getBoard());
         this.userService.saveUser(this.currentUser);
         this.userService.saveBoard(this.sudokuService.getSudoku().getBoard());
         return new ResponseEntity<>("success", HttpStatus.OK);
@@ -105,5 +106,12 @@ public class UserController extends SudokuController {
         this.sudokuService.renderBoardValues(model);
         this.sudokuService.styleMutedIndices(model);
         return "game-board-patch :: game-board-patch";
+    }
+    @RequestMapping("/load/timer")
+    public ResponseEntity<String> loadTimer() {
+        Long boardId = this.userService.getBoardIdByUsername(this.currentUser.getUsername());
+        String time = this.userService.getTimeByBoardId(boardId);
+        System.out.println("Loaded timer: " + time);
+        return new ResponseEntity<>(time, HttpStatus.OK);
     }
 }
