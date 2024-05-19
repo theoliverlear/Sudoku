@@ -93,6 +93,7 @@ public class SudokuController {
         for (BoardIndex index : mutedBoardIndices) {
             if (index.getRowIndex() == row - 1 && index.getColumnIndex() == col - 1) {
                 isMuted = true;
+                break;
             }
         }
         //----------------------Render-Spot-Numbers---------------------------
